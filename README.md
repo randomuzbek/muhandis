@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Muhandis
 
-## Getting Started
+Dünya genelinde okuyan/çalışan **Özbek mühendisleri** birleştiren ağ — bir
+**Telegram Mini App** (Telegram içinde açılan tam web uygulaması) + aynı koddan
+sunulan web sitesi.
 
-First, run the development server:
+- **Profiller & dizin** — kim hangi alanda, nerede, neyle uğraşıyor
+- **Forum/akış** — gönderi, soru, proje ilanı, yorum
+- **Birebir bağlan** — Telegram DM ile
+- 4 dil: Özbekçe (Latin), İngilizce, Rusça, Türkçe
 
+## Teknoloji
+
+Next.js 16 (App Router) · TypeScript · Tailwind v4 · next-intl · Auth.js v5 ·
+Drizzle ORM + Postgres (Neon) · grammY (bot) · Telegram Mini App SDK · Vercel.
+
+## Kurulum (yerel)
+
+### 1. Bağımlılıklar
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env   # değerleri doldur
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Veritabanı (Neon)
+1. https://neon.tech → ücretsiz proje → connection string → `.env` `DATABASE_URL`
+2. Tabloları oluştur ve taksonomiyi doldur:
+```bash
+npm run db:migrate
+npm run db:seed
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Telegram botu (BotFather)
+1. Telegram'da **@BotFather** → `/newbot` → token → `.env` `TELEGRAM_BOT_TOKEN`
+2. `.env`'e şunları ekle:
+   - `AUTH_SECRET` — rastgele uzun string (`openssl rand -base64 32`)
+   - `TELEGRAM_WEBHOOK_SECRET` — rastgele string
+   - `ADMIN_TELEGRAM_IDS` — kendi Telegram id'in (admin paneli için)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. HTTPS (Mini App zorunlu)
+Telegram Mini App ve webhook **HTTPS** ister. Yerelde:
+```bash
+npm run dev               # http://localhost:3000
+npx ngrok http 3000       # https://xxxx.ngrok-free.app
+```
+`.env` → `NEXT_PUBLIC_APP_URL` ve `NEXT_PUBLIC_MINI_APP_URL` = ngrok HTTPS URL'si.
 
-## Learn More
+### 5. Bot menü butonu + webhook
+```bash
+npm run setup:telegram
+```
+Bu, Mini App menü butonunu ve `/api/bot` webhook'unu ayarlar. Sonra bota
+`/start` yaz → menü butonundan Mini App açılır.
 
-To learn more about Next.js, take a look at the following resources:
+## Komutlar
+| Komut | Açıklama |
+|---|---|
+| `npm run dev` | Geliştirme sunucusu |
+| `npm run build` / `start` | Üretim derlemesi / sunucu |
+| `npm run lint` / `typecheck` | ESLint / TS kontrol |
+| `npm run db:generate` | Şemadan migration üret |
+| `npm run db:migrate` | Migration'ları uygula |
+| `npm run db:seed` | Taksonomiyi (alanlar/konular) doldur |
+| `npm run db:studio` | Drizzle Studio (DB görsel arayüz) |
+| `npm run setup:telegram` | Bot menü butonu + webhook ayarla |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Mimari (kısa)
+- `app/[locale]/...` — Mini App + web ekranları (onboarding, profil, dizin, feed, admin)
+- `app/api/auth/[...nextauth]` — Auth.js · `app/api/bot` — grammY webhook
+- `auth.ts` — Auth.js (telegram-miniapp initData / Google / e-posta)
+- `db/schema.ts` — Drizzle şema · `lib/queries`, `lib/actions` — sorgu/aksiyonlar
+- `lib/telegram/` — initData doğrulama, bot, tema
+- `messages/{uz,en,ru,tr}.json` — çeviriler
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy (Vercel)
+1. Repo'yu Vercel'e bağla.
+2. Tüm `.env` değişkenlerini Vercel ortam değişkeni olarak ekle
+   (`NEXT_PUBLIC_APP_URL` = Vercel domaini).
+3. Deploy sonrası `npm run db:migrate` (üretim DB'sine) ve `npm run setup:telegram`
+   (üretim URL'siyle) çalıştır.
 
-## Deploy on Vercel
+## Telegram grubu & kanalı (manuel)
+Mini App'in yanında topluluğu canlı tutmak için:
+1. **Grup** oluştur (serbest sohbet/tanışma) → açıklamasına Mini App linkini koy.
+2. **Kanal** oluştur (tek yönlü duyurular) → sabit mesaja Mini App linki.
+3. Bot menü butonu zaten Mini App'i açıyor.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tohumlama (cold-start)
+Mini App boşken değersizdir. Açılışta:
+1. Kendi çevrenden (Baykar/yurtdışı) ilk ~50-100 mühendisi davet et.
+2. Profillerini doldurmalarını sağla → dizin "canlı" görünsün.
+3. Grupta birkaç başlangıç gönderisi/sorusu aç.
+Yazılı eşik koy (örn. "500 aktif üye olunca X").
