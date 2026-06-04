@@ -1,0 +1,29 @@
+{
+  "app": {
+    "name": "Muhandis"
+  },
+  "home": {
+    "tagline": "Özbek mühendisler topluluğu",
+    "description": "Dünya genelinde okuyan ve çalışan Özbek mühendisleri birleştiren ağ. Bilgi paylaşın, projeleriniz için iş ortağı bulun ve yol gösterilsin.",
+    "joinTelegram": "Telegram topluluğuna katıl",
+    "openApp": "Uygulamayı aç",
+    "features": {
+      "directory": {
+        "title": "Mühendis dizini",
+        "desc": "Kim hangi alanda, nerede ve ne üzerine çalışıyor görün."
+      },
+      "qa": {
+        "title": "Soru & cevap",
+        "desc": "Teknik ve kariyer sorularınıza topluluktan cevap alın."
+      },
+      "projects": {
+        "title": "Proje panosu",
+        "desc": "Projeniz için doğru mühendisi bulun."
+      },
+      "mentorship": {
+        "title": "Mentorluk",
+        "desc": "Yurtdışında okumuş veya çalışmış mühendislerden yol alın."
+      }
+    }
+  }
+}

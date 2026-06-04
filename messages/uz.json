@@ -1,0 +1,29 @@
+{
+  "app": {
+    "name": "Muhandis"
+  },
+  "home": {
+    "tagline": "O'zbek muhandislari hamjamiyati",
+    "description": "Dunyo bo'ylab o'qiyotgan va ishlayotgan o'zbek muhandislarini birlashtiruvchi tarmoq. Tajriba almashing, loyihalar uchun hamkor toping, yo'l-yo'riq oling.",
+    "joinTelegram": "Telegram hamjamiyatiga qo'shilish",
+    "openApp": "Ilovani ochish",
+    "features": {
+      "directory": {
+        "title": "Muhandislar katalogi",
+        "desc": "Kim qaysi sohada, qayerda va nima ustida ishlayotganini ko'ring."
+      },
+      "qa": {
+        "title": "Savol-javob",
+        "desc": "Texnik va karyera savollaringizga jamoadan javob oling."
+      },
+      "projects": {
+        "title": "Loyiha e'lonlari",
+        "desc": "Loyihangiz uchun kerakli muhandisni toping."
+      },
+      "mentorship": {
+        "title": "Mentorlik",
+        "desc": "Chet elda o'qigan yoki ishlagan muhandislardan yo'l-yo'riq oling."
+      }
+    }
+  }
+}

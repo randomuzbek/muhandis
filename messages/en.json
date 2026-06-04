@@ -1,0 +1,29 @@
+{
+  "app": {
+    "name": "Muhandis"
+  },
+  "home": {
+    "tagline": "A community of Uzbek engineers",
+    "description": "A network connecting Uzbek engineers studying and working across the world. Share know-how, find collaborators for your projects, and get guidance.",
+    "joinTelegram": "Join the Telegram community",
+    "openApp": "Open the app",
+    "features": {
+      "directory": {
+        "title": "Engineer directory",
+        "desc": "See who works in which field, where, and on what."
+      },
+      "qa": {
+        "title": "Questions & answers",
+        "desc": "Get answers to technical and career questions from the community."
+      },
+      "projects": {
+        "title": "Project board",
+        "desc": "Find the right engineer for your project."
+      },
+      "mentorship": {
+        "title": "Mentorship",
+        "desc": "Get guidance from engineers who studied or worked abroad."
+      }
+    }
+  }
+}
