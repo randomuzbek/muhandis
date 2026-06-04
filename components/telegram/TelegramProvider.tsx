@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { TelegramThemeParams } from "@/types/telegram-webapp";
 
 interface TelegramContextValue {
@@ -15,11 +9,13 @@ interface TelegramContextValue {
   colorScheme: "light" | "dark";
 }
 
-const TelegramContext = createContext<TelegramContextValue>({
+const initialState: TelegramContextValue = {
   isMiniApp: false,
   initData: null,
   colorScheme: "light",
-});
+};
+
+const TelegramContext = createContext<TelegramContextValue>(initialState);
 
 export function useTelegram() {
   return useContext(TelegramContext);
@@ -43,9 +39,7 @@ function applyTheme(theme: TelegramThemeParams) {
 }
 
 export function TelegramProvider({ children }: { children: React.ReactNode }) {
-  const [isMiniApp, setIsMiniApp] = useState(false);
-  const [initData, setInitData] = useState<string | null>(null);
-  const [colorScheme, setColorScheme] = useState<"light" | "dark">("light");
+  const [state, setState] = useState<TelegramContextValue>(initialState);
 
   useEffect(() => {
     const wa = window.Telegram?.WebApp;
@@ -54,26 +48,25 @@ export function TelegramProvider({ children }: { children: React.ReactNode }) {
 
     wa.ready();
     wa.expand();
-    setIsMiniApp(true);
-    setInitData(wa.initData);
-    setColorScheme(wa.colorScheme);
     applyTheme(wa.themeParams);
+    // Harici sistem (Telegram WebApp) ile mount anında senkronizasyon
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setState({
+      isMiniApp: true,
+      initData: wa.initData,
+      colorScheme: wa.colorScheme,
+    });
 
     const onThemeChanged = () => {
-      setColorScheme(wa.colorScheme);
       applyTheme(wa.themeParams);
+      setState((s) => ({ ...s, colorScheme: wa.colorScheme }));
     };
     wa.onEvent("themeChanged", onThemeChanged);
     return () => wa.offEvent("themeChanged", onThemeChanged);
   }, []);
 
-  const value = useMemo(
-    () => ({ isMiniApp, initData, colorScheme }),
-    [isMiniApp, initData, colorScheme],
-  );
-
   return (
-    <TelegramContext.Provider value={value}>
+    <TelegramContext.Provider value={state}>
       {children}
     </TelegramContext.Provider>
   );

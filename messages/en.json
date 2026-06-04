@@ -2,6 +2,13 @@
   "app": {
     "name": "Muhandis"
   },
+  "nav": {
+    "home": "Home",
+    "profile": "Profile",
+    "editProfile": "Edit profile",
+    "signIn": "Sign in",
+    "signOut": "Sign out"
+  },
   "home": {
     "tagline": "A community of Uzbek engineers",
     "description": "A network connecting Uzbek engineers studying and working across the world. Share know-how, find collaborators for your projects, and get guidance.",
@@ -25,5 +32,54 @@
         "desc": "Get guidance from engineers who studied or worked abroad."
       }
     }
+  },
+  "profile": {
+    "onboardingTitle": "Complete your profile",
+    "onboardingSubtitle": "Add a few details so other engineers can find you.",
+    "editTitle": "Edit profile",
+    "displayName": "Name",
+    "headline": "Headline",
+    "country": "Country",
+    "city": "City",
+    "currentRole": "Role",
+    "company": "Company",
+    "educationLevel": "Education level",
+    "education": {
+      "none": "Not selected",
+      "student": "Student",
+      "bachelor": "Bachelor",
+      "master": "Master",
+      "phd": "PhD",
+      "other": "Other"
+    },
+    "fields": "Engineering fields",
+    "skills": "Skills",
+    "interests": "Interests",
+    "bio": "About you",
+    "openToMentoring": "Open to mentoring",
+    "lookingForCollaborators": "Looking for collaborators",
+    "links": "Links",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "website": "Website",
+    "telegram": "Telegram",
+    "tagHint": "Type and press Enter",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "viewTitle": "My profile",
+    "empty": "You don't have a profile yet.",
+    "createCta": "Create profile",
+    "editCta": "Edit"
+  },
+  "auth": {
+    "signInTitle": "Sign in",
+    "miniAppOnly": "Open inside Telegram, or use one of the methods below.",
+    "withGoogle": "Continue with Google",
+    "email": "Email",
+    "password": "Password",
+    "withEmail": "Sign in with email",
+    "loading": "Loading..."
   }
 }

@@ -5,7 +5,7 @@ import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { TelegramProvider } from "@/components/telegram/TelegramProvider";
+import { Providers } from "@/components/providers/Providers";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -54,7 +54,7 @@ export default async function LocaleLayout({
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <NextIntlClientProvider>
-          <TelegramProvider>{children}</TelegramProvider>
+          <Providers>{children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>

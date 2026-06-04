@@ -2,6 +2,13 @@
   "app": {
     "name": "Muhandis"
   },
+  "nav": {
+    "home": "Bosh sahifa",
+    "profile": "Profil",
+    "editProfile": "Profilni tahrirlash",
+    "signIn": "Kirish",
+    "signOut": "Chiqish"
+  },
   "home": {
     "tagline": "O'zbek muhandislari hamjamiyati",
     "description": "Dunyo bo'ylab o'qiyotgan va ishlayotgan o'zbek muhandislarini birlashtiruvchi tarmoq. Tajriba almashing, loyihalar uchun hamkor toping, yo'l-yo'riq oling.",
@@ -25,5 +32,54 @@
         "desc": "Chet elda o'qigan yoki ishlagan muhandislardan yo'l-yo'riq oling."
       }
     }
+  },
+  "profile": {
+    "onboardingTitle": "Profilingizni to'ldiring",
+    "onboardingSubtitle": "Boshqa muhandislar sizni topa olishi uchun bir necha ma'lumot kiriting.",
+    "editTitle": "Profilni tahrirlash",
+    "displayName": "Ism",
+    "headline": "Qisqa tavsif",
+    "country": "Davlat",
+    "city": "Shahar",
+    "currentRole": "Lavozim",
+    "company": "Tashkilot",
+    "educationLevel": "Ta'lim darajasi",
+    "education": {
+      "none": "Tanlanmagan",
+      "student": "Talaba",
+      "bachelor": "Bakalavr",
+      "master": "Magistr",
+      "phd": "PhD",
+      "other": "Boshqa"
+    },
+    "fields": "Muhandislik sohalari",
+    "skills": "Ko'nikmalar",
+    "interests": "Qiziqishlar",
+    "bio": "O'zingiz haqingizda",
+    "openToMentoring": "Mentorlikka tayyorman",
+    "lookingForCollaborators": "Loyiha uchun hamkor qidiryapman",
+    "links": "Havolalar",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "website": "Veb-sayt",
+    "telegram": "Telegram",
+    "tagHint": "Yozing va Enter bosing",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda...",
+    "saved": "Saqlandi",
+    "errorGeneric": "Xatolik yuz berdi. Qayta urinib ko'ring.",
+    "viewTitle": "Profilim",
+    "empty": "Hali profilingiz yo'q.",
+    "createCta": "Profil yaratish",
+    "editCta": "Tahrirlash"
+  },
+  "auth": {
+    "signInTitle": "Kirish",
+    "miniAppOnly": "Ilovaga Telegram orqali kiring yoki quyidagi usullardan foydalaning.",
+    "withGoogle": "Google bilan kirish",
+    "email": "E-pochta",
+    "password": "Parol",
+    "withEmail": "E-pochta bilan kirish",
+    "loading": "Yuklanmoqda..."
   }
 }

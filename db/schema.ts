@@ -25,6 +25,8 @@ export const users = pgTable("users", {
   email: text("email").unique(),
   emailVerified: timestamp("email_verified", { mode: "date" }),
   image: text("image"),
+  // E-posta/şifre girişi için (bcrypt). OAuth/Telegram kullanıcılarında null.
+  passwordHash: text("password_hash"),
   // Telegram kimliği (Mini App'ten gelir) — birincil bağlama anahtarı
   telegramId: bigint("telegram_id", { mode: "number" }).unique(),
   telegramUsername: text("telegram_username"),

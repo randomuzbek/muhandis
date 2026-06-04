@@ -2,6 +2,13 @@
   "app": {
     "name": "Muhandis"
   },
+  "nav": {
+    "home": "Ana sayfa",
+    "profile": "Profil",
+    "editProfile": "Profili düzenle",
+    "signIn": "Giriş yap",
+    "signOut": "Çıkış yap"
+  },
   "home": {
     "tagline": "Özbek mühendisler topluluğu",
     "description": "Dünya genelinde okuyan ve çalışan Özbek mühendisleri birleştiren ağ. Bilgi paylaşın, projeleriniz için iş ortağı bulun ve yol gösterilsin.",
@@ -25,5 +32,54 @@
         "desc": "Yurtdışında okumuş veya çalışmış mühendislerden yol alın."
       }
     }
+  },
+  "profile": {
+    "onboardingTitle": "Profilini tamamla",
+    "onboardingSubtitle": "Diğer mühendislerin seni bulabilmesi için birkaç bilgi ekle.",
+    "editTitle": "Profili düzenle",
+    "displayName": "İsim",
+    "headline": "Kısa tanım",
+    "country": "Ülke",
+    "city": "Şehir",
+    "currentRole": "Pozisyon",
+    "company": "Kurum",
+    "educationLevel": "Eğitim seviyesi",
+    "education": {
+      "none": "Seçilmedi",
+      "student": "Öğrenci",
+      "bachelor": "Lisans",
+      "master": "Yüksek lisans",
+      "phd": "Doktora",
+      "other": "Diğer"
+    },
+    "fields": "Mühendislik alanları",
+    "skills": "Yetenekler",
+    "interests": "İlgi alanları",
+    "bio": "Hakkında",
+    "openToMentoring": "Mentorluğa açığım",
+    "lookingForCollaborators": "Proje için iş ortağı arıyorum",
+    "links": "Bağlantılar",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "website": "Web sitesi",
+    "telegram": "Telegram",
+    "tagHint": "Yaz ve Enter'a bas",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor...",
+    "saved": "Kaydedildi",
+    "errorGeneric": "Bir hata oluştu. Tekrar deneyin.",
+    "viewTitle": "Profilim",
+    "empty": "Henüz bir profilin yok.",
+    "createCta": "Profil oluştur",
+    "editCta": "Düzenle"
+  },
+  "auth": {
+    "signInTitle": "Giriş",
+    "miniAppOnly": "Telegram içinde aç ya da aşağıdaki yöntemlerden birini kullan.",
+    "withGoogle": "Google ile devam et",
+    "email": "E-posta",
+    "password": "Şifre",
+    "withEmail": "E-posta ile giriş",
+    "loading": "Yükleniyor..."
   }
 }

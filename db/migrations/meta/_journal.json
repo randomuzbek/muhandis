@@ -8,6 +8,13 @@
       "when": 1780580563893,
       "tag": "0000_elite_zodiak",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780580905751,
+      "tag": "0001_careless_warpath",
+      "breakpoints": true
     }
   ]
 }
