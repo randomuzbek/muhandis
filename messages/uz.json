@@ -4,6 +4,7 @@
   },
   "nav": {
     "home": "Bosh sahifa",
+    "directory": "Katalog",
     "profile": "Profil",
     "editProfile": "Profilni tahrirlash",
     "signIn": "Kirish",
@@ -71,7 +72,18 @@
     "viewTitle": "Profilim",
     "empty": "Hali profilingiz yo'q.",
     "createCta": "Profil yaratish",
-    "editCta": "Tahrirlash"
+    "editCta": "Tahrirlash",
+    "connect": "Bog'lanish"
+  },
+  "directory": {
+    "title": "Muhandislar katalogi",
+    "searchPlaceholder": "Ism, lavozim yoki tashkilot bo'yicha qidirish",
+    "allFields": "Barcha sohalar",
+    "countryPlaceholder": "Davlat",
+    "mentoring": "Mentorlik",
+    "collaborators": "Hamkorlik",
+    "apply": "Qo'llash",
+    "empty": "Hech kim topilmadi."
   },
   "auth": {
     "signInTitle": "Kirish",

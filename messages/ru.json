@@ -4,6 +4,7 @@
   },
   "nav": {
     "home": "Главная",
+    "directory": "Каталог",
     "profile": "Профиль",
     "editProfile": "Редактировать профиль",
     "signIn": "Войти",
@@ -71,7 +72,18 @@
     "viewTitle": "Мой профиль",
     "empty": "У вас пока нет профиля.",
     "createCta": "Создать профиль",
-    "editCta": "Редактировать"
+    "editCta": "Редактировать",
+    "connect": "Связаться"
+  },
+  "directory": {
+    "title": "Каталог инженеров",
+    "searchPlaceholder": "Поиск по имени, должности или компании",
+    "allFields": "Все направления",
+    "countryPlaceholder": "Страна",
+    "mentoring": "Менторство",
+    "collaborators": "Сотрудничество",
+    "apply": "Применить",
+    "empty": "Инженеры не найдены."
   },
   "auth": {
     "signInTitle": "Вход",

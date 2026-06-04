@@ -4,6 +4,7 @@
   },
   "nav": {
     "home": "Ana sayfa",
+    "directory": "Dizin",
     "profile": "Profil",
     "editProfile": "Profili düzenle",
     "signIn": "Giriş yap",
@@ -71,7 +72,18 @@
     "viewTitle": "Profilim",
     "empty": "Henüz bir profilin yok.",
     "createCta": "Profil oluştur",
-    "editCta": "Düzenle"
+    "editCta": "Düzenle",
+    "connect": "Bağlan"
+  },
+  "directory": {
+    "title": "Mühendis dizini",
+    "searchPlaceholder": "İsim, pozisyon veya kuruma göre ara",
+    "allFields": "Tüm alanlar",
+    "countryPlaceholder": "Ülke",
+    "mentoring": "Mentorluk",
+    "collaborators": "İş birliği",
+    "apply": "Uygula",
+    "empty": "Mühendis bulunamadı."
   },
   "auth": {
     "signInTitle": "Giriş",

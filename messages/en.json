@@ -4,6 +4,7 @@
   },
   "nav": {
     "home": "Home",
+    "directory": "Directory",
     "profile": "Profile",
     "editProfile": "Edit profile",
     "signIn": "Sign in",
@@ -71,7 +72,18 @@
     "viewTitle": "My profile",
     "empty": "You don't have a profile yet.",
     "createCta": "Create profile",
-    "editCta": "Edit"
+    "editCta": "Edit",
+    "connect": "Connect"
+  },
+  "directory": {
+    "title": "Engineer directory",
+    "searchPlaceholder": "Search by name, role or company",
+    "allFields": "All fields",
+    "countryPlaceholder": "Country",
+    "mentoring": "Mentoring",
+    "collaborators": "Collaboration",
+    "apply": "Apply",
+    "empty": "No engineers found."
   },
   "auth": {
     "signInTitle": "Sign in",
