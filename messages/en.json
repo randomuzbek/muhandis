@@ -5,6 +5,7 @@
   "nav": {
     "home": "Home",
     "directory": "Directory",
+    "feed": "Feed",
     "profile": "Profile",
     "editProfile": "Edit profile",
     "signIn": "Sign in",
@@ -84,6 +85,30 @@
     "collaborators": "Collaboration",
     "apply": "Apply",
     "empty": "No engineers found."
+  },
+  "feed": {
+    "title": "Feed",
+    "newPost": "New post",
+    "empty": "No posts yet.",
+    "allTopics": "All",
+    "topic": "Topic",
+    "noTopic": "No topic",
+    "typeLabel": "Type",
+    "type": {
+      "post": "Post",
+      "question": "Question",
+      "project": "Project"
+    },
+    "titlePlaceholder": "Title (optional)",
+    "bodyPlaceholder": "What do you want to share?",
+    "publish": "Publish",
+    "publishing": "Publishing...",
+    "comments": "Comments",
+    "commentPlaceholder": "Write a comment...",
+    "addComment": "Comment",
+    "sending": "Sending...",
+    "like": "Like",
+    "signInToPost": "Sign in to comment"
   },
   "auth": {
     "signInTitle": "Sign in",

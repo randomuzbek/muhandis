@@ -19,6 +19,9 @@ export function Header() {
           <Link href="/directory" className="opacity-70 hover:opacity-100">
             {t("directory")}
           </Link>
+          <Link href="/feed" className="opacity-70 hover:opacity-100">
+            {t("feed")}
+          </Link>
           {authed ? (
             <>
               <Link href="/profile" className="opacity-70 hover:opacity-100">

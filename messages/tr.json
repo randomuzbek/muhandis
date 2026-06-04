@@ -5,6 +5,7 @@
   "nav": {
     "home": "Ana sayfa",
     "directory": "Dizin",
+    "feed": "Akış",
     "profile": "Profil",
     "editProfile": "Profili düzenle",
     "signIn": "Giriş yap",
@@ -84,6 +85,30 @@
     "collaborators": "İş birliği",
     "apply": "Uygula",
     "empty": "Mühendis bulunamadı."
+  },
+  "feed": {
+    "title": "Akış",
+    "newPost": "Yeni gönderi",
+    "empty": "Henüz gönderi yok.",
+    "allTopics": "Tümü",
+    "topic": "Konu",
+    "noTopic": "Konusuz",
+    "typeLabel": "Tür",
+    "type": {
+      "post": "Gönderi",
+      "question": "Soru",
+      "project": "Proje"
+    },
+    "titlePlaceholder": "Başlık (isteğe bağlı)",
+    "bodyPlaceholder": "Ne paylaşmak istersin?",
+    "publish": "Yayınla",
+    "publishing": "Yayınlanıyor...",
+    "comments": "Yorumlar",
+    "commentPlaceholder": "Yorum yaz...",
+    "addComment": "Yorum yap",
+    "sending": "Gönderiliyor...",
+    "like": "Beğen",
+    "signInToPost": "Yorum yapmak için giriş yap"
   },
   "auth": {
     "signInTitle": "Giriş",

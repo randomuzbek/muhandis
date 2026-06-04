@@ -5,6 +5,7 @@
   "nav": {
     "home": "Главная",
     "directory": "Каталог",
+    "feed": "Лента",
     "profile": "Профиль",
     "editProfile": "Редактировать профиль",
     "signIn": "Войти",
@@ -84,6 +85,30 @@
     "collaborators": "Сотрудничество",
     "apply": "Применить",
     "empty": "Инженеры не найдены."
+  },
+  "feed": {
+    "title": "Лента",
+    "newPost": "Новый пост",
+    "empty": "Пока нет постов.",
+    "allTopics": "Все",
+    "topic": "Тема",
+    "noTopic": "Без темы",
+    "typeLabel": "Тип",
+    "type": {
+      "post": "Пост",
+      "question": "Вопрос",
+      "project": "Проект"
+    },
+    "titlePlaceholder": "Заголовок (необязательно)",
+    "bodyPlaceholder": "Чем хотите поделиться?",
+    "publish": "Опубликовать",
+    "publishing": "Публикация...",
+    "comments": "Комментарии",
+    "commentPlaceholder": "Напишите комментарий...",
+    "addComment": "Комментировать",
+    "sending": "Отправка...",
+    "like": "Нравится",
+    "signInToPost": "Войдите, чтобы комментировать"
   },
   "auth": {
     "signInTitle": "Вход",

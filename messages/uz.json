@@ -5,6 +5,7 @@
   "nav": {
     "home": "Bosh sahifa",
     "directory": "Katalog",
+    "feed": "Lenta",
     "profile": "Profil",
     "editProfile": "Profilni tahrirlash",
     "signIn": "Kirish",
@@ -84,6 +85,30 @@
     "collaborators": "Hamkorlik",
     "apply": "Qo'llash",
     "empty": "Hech kim topilmadi."
+  },
+  "feed": {
+    "title": "Lenta",
+    "newPost": "Yangi post",
+    "empty": "Hali postlar yo'q.",
+    "allTopics": "Barchasi",
+    "topic": "Mavzu",
+    "noTopic": "Mavzusiz",
+    "typeLabel": "Turi",
+    "type": {
+      "post": "Post",
+      "question": "Savol",
+      "project": "Loyiha"
+    },
+    "titlePlaceholder": "Sarlavha (ixtiyoriy)",
+    "bodyPlaceholder": "Nima yozmoqchisiz?",
+    "publish": "E'lon qilish",
+    "publishing": "Yuborilmoqda...",
+    "comments": "Izohlar",
+    "commentPlaceholder": "Izoh yozing...",
+    "addComment": "Izoh qoldirish",
+    "sending": "Yuborilmoqda...",
+    "like": "Yoqdi",
+    "signInToPost": "Izoh qoldirish uchun kiring"
   },
   "auth": {
     "signInTitle": "Kirish",
