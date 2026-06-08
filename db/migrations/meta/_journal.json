@@ -15,6 +15,20 @@
       "when": 1780580905751,
       "tag": "0001_careless_warpath",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780914110448,
+      "tag": "0002_jazzy_medusa",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780916138402,
+      "tag": "0003_mean_starbolt",
+      "breakpoints": true
     }
   ]
 }

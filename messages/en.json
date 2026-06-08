@@ -35,6 +35,21 @@
       }
     }
   },
+  "admin": {
+    "title": "Statistics",
+    "subtitle": "Community overview at a glance.",
+    "byField": "By field",
+    "byCountry": "By country",
+    "empty": "No data yet",
+    "kpi": {
+      "users": "Users",
+      "profiles": "Profiles",
+      "posts": "Posts",
+      "comments": "Comments",
+      "mentoring": "Open to mentoring",
+      "collaborators": "Seeking collaborators"
+    }
+  },
   "profile": {
     "onboardingTitle": "Complete your profile",
     "onboardingSubtitle": "Add a few details so other engineers can find you.",
@@ -54,7 +69,17 @@
       "phd": "PhD",
       "other": "Other"
     },
+    "statusLabel": "Status",
+    "status": {
+      "student": "Student",
+      "working": "Working",
+      "seeking": "Job seeking",
+      "enthusiast": "Enthusiast",
+      "other": "Other"
+    },
     "fields": "Engineering fields",
+    "customFields": "Your own fields",
+    "customFieldsHint": "Not in the list? Type your own and press Enter",
     "skills": "Skills",
     "interests": "Interests",
     "bio": "About you",
@@ -74,7 +99,34 @@
     "empty": "You don't have a profile yet.",
     "createCta": "Create profile",
     "editCta": "Edit",
-    "connect": "Connect"
+    "connect": "Connect",
+    "follow": "Follow",
+    "following": "Following",
+    "followers": "followers",
+    "anonymous": "Anonymous engineer",
+    "completeness": "Profile completeness",
+    "completeHint": "Complete your profile so others can find you",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "copied": "Copied ✓",
+    "qr": "QR code",
+    "wizard": {
+      "greeting": "Hi, {name}! 👋",
+      "next": "Continue",
+      "back": "Back",
+      "finish": "Finish 🎉",
+      "progress": "{current} / {total}",
+      "steps": {
+        "welcome": { "title": "Let's meet", "subtitle": "How should the community see you?" },
+        "status": { "title": "What describes you best?", "subtitle": "Leave it blank if you like — nothing is required" },
+        "location": { "title": "Where are you? 🌍", "subtitle": "Which country and city?" },
+        "work": { "title": "What do you do? 💼", "subtitle": "Role, company and education" },
+        "fields": { "title": "Your fields? ⚙️", "subtitle": "Pick the engineering fields that fit you" },
+        "skillsInterests": { "title": "Skills & interests ✨", "subtitle": "Add a few keywords" },
+        "about": { "title": "Tell us about you 📝", "subtitle": "A short bio and your links" },
+        "help": { "title": "How can you help? 🤝", "subtitle": "Mentoring and collaboration" }
+      }
+    }
   },
   "directory": {
     "title": "Engineer directory",
@@ -84,6 +136,7 @@
     "mentoring": "Mentoring",
     "collaborators": "Collaboration",
     "apply": "Apply",
+    "results": "{count, plural, =0 {No results} one {# engineer} other {# engineers}}",
     "empty": "No engineers found."
   },
   "feed": {

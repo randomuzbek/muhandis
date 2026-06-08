@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getSessionUser } from "@/lib/auth/session";
 import { loadMyProfile } from "@/lib/actions/profile";
 import { ProfileView } from "@/components/profile/ProfileView";
+import { EmptyState, buttonClass } from "@/components/ui/kit";
 
 export default async function ProfilePage({
   params,
@@ -16,32 +17,40 @@ export default async function ProfilePage({
   const user = await getSessionUser();
   if (!user) redirect(`/${locale}/login`);
 
-  const { profile, fieldSlugs, skills, interests } = await loadMyProfile();
+  const { profile, image, fieldSlugs, skills, interests } =
+    await loadMyProfile();
   const t = await getTranslations("profile");
 
   if (!profile) {
     return (
-      <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-16 text-center">
-        <p className="mb-6 opacity-70">{t("empty")}</p>
-        <Link
-          href="/onboarding"
-          className="rounded-full bg-foreground px-6 py-3 font-medium text-background"
-        >
-          {t("createCta")}
-        </Link>
+      <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10">
+        <EmptyState
+          icon="👋"
+          title={t("empty")}
+          action={
+            <Link href="/onboarding" className={buttonClass("primary")}>
+              {t("createCta")}
+            </Link>
+          }
+        />
       </main>
     );
   }
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
+  const shareUrl = `${appUrl}/${locale}/u/${profile.userId}`;
+
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-12">
+    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8">
       <ProfileView
         profile={profile}
+        image={image}
         fieldSlugs={fieldSlugs}
         skills={skills}
         interests={interests}
         locale={locale}
         variant="self"
+        shareUrl={shareUrl}
       />
     </main>
   );

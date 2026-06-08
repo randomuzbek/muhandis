@@ -12,7 +12,7 @@ import { routing } from "@/i18n/routing";
 const createSchema = z.object({
   type: z.enum(POST_TYPES).default("post"),
   title: z.string().trim().max(160).optional().or(z.literal("")),
-  body: z.string().trim().min(1, "Bo'sh bo'lishi mumkin emas").max(8000),
+  body: z.string().trim().min(1, "EMPTY").max(8000),
   topicSlug: z.string().trim().optional().or(z.literal("")),
 });
 

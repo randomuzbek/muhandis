@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toggleReaction } from "@/lib/actions/posts";
+import { cn } from "@/components/ui/kit";
 
 export function LikeButton({
   postId,
@@ -36,16 +37,37 @@ export function LikeButton({
 
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition ${
+      aria-pressed={liked}
+      className={cn(
+        "inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium ring-1 transition active:scale-[0.97]",
         liked
-          ? "border-transparent bg-red-500/15 text-red-600 dark:text-red-400"
-          : "border-foreground/20 hover:bg-foreground/5"
-      }`}
+          ? "bg-red-500/15 text-red-600 ring-transparent dark:text-red-400"
+          : "text-[var(--color-foreground)] ring-[var(--color-separator)] hover:bg-[var(--color-secondary)]",
+      )}
     >
-      <span>{liked ? "♥" : "♡"}</span>
+      <HeartIcon filled={liked} />
       <span>{count}</span>
-      <span className="opacity-70">{t("like")}</span>
+      <span className="text-[var(--color-hint)]">{t("like")}</span>
     </button>
+  );
+}
+
+function HeartIcon({ filled }: { filled: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill={filled ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z" />
+    </svg>
   );
 }

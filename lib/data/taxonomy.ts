@@ -41,6 +41,16 @@ export const EDUCATION_LEVELS = [
 ] as const;
 export type EducationLevel = (typeof EDUCATION_LEVELS)[number];
 
+// Kullanıcı durumu (onboarding'in başında sorulur)
+export const STATUS_OPTIONS = [
+  "student",
+  "working",
+  "seeking",
+  "enthusiast",
+  "other",
+] as const;
+export type StatusOption = (typeof STATUS_OPTIONS)[number];
+
 export function labelFor(labels: LocalizedLabel, locale: string): string {
   return labels[locale as keyof LocalizedLabel] ?? labels.en;
 }

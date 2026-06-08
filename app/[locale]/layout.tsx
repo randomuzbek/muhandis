@@ -46,6 +46,9 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      // Telegram webview <html>'e --tg-theme-* CSS değişkenlerini enjekte ettiği için
+      // sunucu/istemci stil farkı oluşur; bu zararsız uyarıyı bastırırız.
+      suppressHydrationWarning
     >
       <head>
         <Script

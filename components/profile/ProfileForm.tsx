@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { TagInput } from "@/components/ui/TagInput";
+import { CountrySelect, CityField } from "@/components/ui/PlaceFields";
 import { saveProfile, type ProfileInput } from "@/lib/actions/profile";
-import { EDUCATION_LEVELS } from "@/lib/data/taxonomy";
+import { EDUCATION_LEVELS, STATUS_OPTIONS } from "@/lib/data/taxonomy";
 
 export interface ProfileFormInitial {
   displayName: string;
   headline: string;
+  status: string;
+  customFields: string[];
   country: string;
   city: string;
   currentRole: string;
@@ -36,6 +39,7 @@ const inputClass =
 
 export function ProfileForm({ initial, fields }: Props) {
   const t = useTranslations("profile");
+  const locale = useLocale();
   const router = useRouter();
 
   const [state, setState] = useState<ProfileFormInitial>(initial);
@@ -65,6 +69,10 @@ export function ProfileForm({ initial, fields }: Props) {
     const input: ProfileInput = {
       displayName: state.displayName,
       headline: state.headline,
+      status: state.status
+        ? (state.status as ProfileInput["status"])
+        : undefined,
+      customFields: state.customFields,
       country: state.country,
       city: state.city,
       currentRole: state.currentRole,
@@ -109,19 +117,38 @@ export function ProfileForm({ initial, fields }: Props) {
         />
       </Labeled>
 
+      <Labeled label={t("statusLabel")}>
+        <select
+          className={inputClass}
+          value={state.status}
+          onChange={(e) => set("status", e.target.value)}
+        >
+          <option value="">{t("education.none")}</option>
+          {STATUS_OPTIONS.map((s) => (
+            <option key={s} value={s}>
+              {t(`status.${s}`)}
+            </option>
+          ))}
+        </select>
+      </Labeled>
+
       <div className="grid grid-cols-2 gap-3">
         <Labeled label={t("country")}>
-          <input
-            className={inputClass}
+          <CountrySelect
             value={state.country}
-            onChange={(e) => set("country", e.target.value)}
+            onChange={(v) => set("country", v)}
+            locale={locale}
+            className={inputClass}
+            placeholder={t("country")}
           />
         </Labeled>
         <Labeled label={t("city")}>
-          <input
-            className={inputClass}
+          <CityField
             value={state.city}
-            onChange={(e) => set("city", e.target.value)}
+            onChange={(v) => set("city", v)}
+            country={state.country}
+            className={inputClass}
+            placeholder={t("city")}
           />
         </Labeled>
       </div>
@@ -178,6 +205,14 @@ export function ProfileForm({ initial, fields }: Props) {
             );
           })}
         </div>
+      </Labeled>
+
+      <Labeled label={t("customFields")}>
+        <TagInput
+          value={state.customFields}
+          onChange={(v) => set("customFields", v)}
+          placeholder={t("customFieldsHint")}
+        />
       </Labeled>
 
       <Labeled label={t("skills")}>

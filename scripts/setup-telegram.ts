@@ -13,7 +13,8 @@ async function main() {
       "NEXT_PUBLIC_APP_URL https olmalı (ngrok ya da Vercel URL'si).",
     );
   }
-  const miniAppUrl = process.env.NEXT_PUBLIC_MINI_APP_URL || appUrl;
+  // Menü butonunun web_app.url'i doğrudan HTTPS web adresi olmalı (t.me linki
+  // değil). NEXT_PUBLIC_MINI_APP_URL landing CTA'sı (t.me) için; menü butonu appUrl.
   const secret = process.env.TELEGRAM_WEBHOOK_SECRET;
 
   const bot = new Bot(token);
@@ -23,10 +24,10 @@ async function main() {
     menu_button: {
       type: "web_app",
       text: "Muhandis",
-      web_app: { url: miniAppUrl },
+      web_app: { url: appUrl },
     },
   });
-  console.log("✅ Menü butonu ayarlandı:", miniAppUrl);
+  console.log("✅ Menü butonu ayarlandı:", appUrl);
 
   // 2) Webhook
   const webhookUrl = `${appUrl}/api/bot`;

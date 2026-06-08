@@ -5,6 +5,7 @@ import { eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import {
   profiles,
+  users,
   engineeringFields,
   profileFields,
   skills,
@@ -13,14 +14,20 @@ import {
   profileInterests,
 } from "@/db/schema";
 import { requireUserId } from "@/lib/auth/session";
-import { EDUCATION_LEVELS } from "@/lib/data/taxonomy";
+import { EDUCATION_LEVELS, STATUS_OPTIONS } from "@/lib/data/taxonomy";
 
 const linkSchema = z.string().trim().max(300).optional().or(z.literal(""));
 
 const profileSchema = z.object({
-  displayName: z.string().trim().min(1, "İsim gerekli").max(120),
+  // İsim dahil hiçbir alan zorunlu değil (anonim profil mümkün).
+  displayName: z.string().trim().max(120).optional().or(z.literal("")),
   headline: z.string().trim().max(160).optional().or(z.literal("")),
   bio: z.string().trim().max(2000).optional().or(z.literal("")),
+  status: z.enum(STATUS_OPTIONS).optional(),
+  customFields: z
+    .array(z.string().trim().min(1).max(40))
+    .max(8)
+    .default([]),
   country: z.string().trim().max(80).optional().or(z.literal("")),
   city: z.string().trim().max(80).optional().or(z.literal("")),
   currentRole: z.string().trim().max(120).optional().or(z.literal("")),
@@ -95,9 +102,11 @@ export async function saveProfile(
 
   const now = new Date();
   const baseValues = {
-    displayName: data.displayName,
+    displayName: data.displayName || null,
     headline: data.headline || null,
     bio: data.bio || null,
+    status: data.status || null,
+    customFields: data.customFields ?? [],
     country: data.country || null,
     city: data.city || null,
     currentRole: data.currentRole || null,
@@ -122,9 +131,10 @@ export async function saveProfile(
     });
   }
 
-  // Mühendislik alanları (slug -> id)
-  await db.delete(profileFields).where(eq(profileFields.userId, userId));
-  if (data.fieldSlugs.length > 0) {
+  // Üç bağımsız grup (alan/yetenek/ilgi) paralel çalışır → daha hızlı.
+  async function saveFields() {
+    await db.delete(profileFields).where(eq(profileFields.userId, userId));
+    if (data.fieldSlugs.length === 0) return;
     const fieldRows = await db
       .select({ id: engineeringFields.id, slug: engineeringFields.slug })
       .from(engineeringFields)
@@ -137,25 +147,31 @@ export async function saveProfile(
     }
   }
 
-  // Yetenekler
-  await db.delete(profileSkills).where(eq(profileSkills.userId, userId));
-  const skillIds = await ensureTagIds(skills, data.skills);
-  if (skillIds.length > 0) {
-    await db
-      .insert(profileSkills)
-      .values(skillIds.map((id) => ({ userId, skillId: id })))
-      .onConflictDoNothing();
+  async function saveSkills() {
+    await db.delete(profileSkills).where(eq(profileSkills.userId, userId));
+    const skillIds = await ensureTagIds(skills, data.skills);
+    if (skillIds.length > 0) {
+      await db
+        .insert(profileSkills)
+        .values(skillIds.map((id) => ({ userId, skillId: id })))
+        .onConflictDoNothing();
+    }
   }
 
-  // İlgi alanları
-  await db.delete(profileInterests).where(eq(profileInterests.userId, userId));
-  const interestIds = await ensureTagIds(interests, data.interests);
-  if (interestIds.length > 0) {
+  async function saveInterests() {
     await db
-      .insert(profileInterests)
-      .values(interestIds.map((id) => ({ userId, interestId: id })))
-      .onConflictDoNothing();
+      .delete(profileInterests)
+      .where(eq(profileInterests.userId, userId));
+    const interestIds = await ensureTagIds(interests, data.interests);
+    if (interestIds.length > 0) {
+      await db
+        .insert(profileInterests)
+        .values(interestIds.map((id) => ({ userId, interestId: id })))
+        .onConflictDoNothing();
+    }
   }
+
+  await Promise.all([saveFields(), saveSkills(), saveInterests()]);
 
   return { ok: true };
 }
@@ -167,6 +183,12 @@ export async function loadMyProfile() {
   const profile = await db.query.profiles.findFirst({
     where: eq(profiles.userId, userId),
   });
+
+  const account = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { image: true, photoUrl: true },
+  });
+  const image = account?.image ?? account?.photoUrl ?? null;
 
   const fieldRows = await db
     .select({ slug: engineeringFields.slug })
@@ -191,6 +213,7 @@ export async function loadMyProfile() {
 
   return {
     profile: profile ?? null,
+    image,
     fieldSlugs: fieldRows.map((r) => r.slug),
     skills: skillRows.map((r) => r.name),
     interests: interestRows.map((r) => r.name),

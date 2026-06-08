@@ -25,11 +25,13 @@ export interface FeedItem {
   topicSlug: string | null;
   authorId: string;
   authorName: string;
+  authorImage: string | null;
   commentCount: number;
   reactionCount: number;
 }
 
 const authorName = sql<string>`coalesce(${profiles.displayName}, ${users.name}, 'Muhandis')`;
+const authorImage = sql<string | null>`coalesce(${users.image}, ${users.photoUrl})`;
 
 export async function listPosts(
   filters: FeedFilters,
@@ -49,6 +51,7 @@ export async function listPosts(
       topicSlug: topics.slug,
       authorId: posts.authorId,
       authorName,
+      authorImage,
       commentCount: sql<number>`(select count(*) from ${comments} where ${comments.postId} = ${posts.id})`,
       reactionCount: sql<number>`(select count(*) from ${reactions} where ${reactions.postId} = ${posts.id})`,
     })
@@ -73,6 +76,7 @@ export interface PostComment {
   createdAt: Date;
   authorId: string;
   authorName: string;
+  authorImage: string | null;
 }
 
 export async function getPost(id: number) {
@@ -86,6 +90,7 @@ export async function getPost(id: number) {
       topicSlug: topics.slug,
       authorId: posts.authorId,
       authorName,
+      authorImage,
     })
     .from(posts)
     .leftJoin(topics, eq(posts.topicId, topics.id))
@@ -103,6 +108,7 @@ export async function getPost(id: number) {
       createdAt: comments.createdAt,
       authorId: comments.authorId,
       authorName,
+      authorImage,
     })
     .from(comments)
     .leftJoin(users, eq(comments.authorId, users.id))

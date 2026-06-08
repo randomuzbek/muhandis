@@ -14,6 +14,8 @@ export function buildProfileInitial(args: {
   return {
     displayName: p?.displayName ?? args.fallbackName ?? "",
     headline: p?.headline ?? "",
+    status: p?.status ?? "",
+    customFields: p?.customFields ?? [],
     country: p?.country ?? "",
     city: p?.city ?? "",
     currentRole: p?.currentRole ?? "",

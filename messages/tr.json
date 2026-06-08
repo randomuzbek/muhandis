@@ -35,6 +35,21 @@
       }
     }
   },
+  "admin": {
+    "title": "İstatistikler",
+    "subtitle": "Topluluğa genel bakış.",
+    "byField": "Alana göre",
+    "byCountry": "Ülkeye göre",
+    "empty": "Henüz veri yok",
+    "kpi": {
+      "users": "Kullanıcılar",
+      "profiles": "Profiller",
+      "posts": "Gönderiler",
+      "comments": "Yorumlar",
+      "mentoring": "Mentorluğa açık",
+      "collaborators": "İş birliği arayan"
+    }
+  },
   "profile": {
     "onboardingTitle": "Profilini tamamla",
     "onboardingSubtitle": "Diğer mühendislerin seni bulabilmesi için birkaç bilgi ekle.",
@@ -54,7 +69,17 @@
       "phd": "Doktora",
       "other": "Diğer"
     },
+    "statusLabel": "Durum",
+    "status": {
+      "student": "Öğrenci",
+      "working": "Çalışıyorum",
+      "seeking": "İş arıyorum",
+      "enthusiast": "Meraklıyım",
+      "other": "Diğer"
+    },
     "fields": "Mühendislik alanları",
+    "customFields": "Kendi alanların",
+    "customFieldsHint": "Listede yoksa kendin yaz, Enter'a bas",
     "skills": "Yetenekler",
     "interests": "İlgi alanları",
     "bio": "Hakkında",
@@ -74,7 +99,34 @@
     "empty": "Henüz bir profilin yok.",
     "createCta": "Profil oluştur",
     "editCta": "Düzenle",
-    "connect": "Bağlan"
+    "connect": "Bağlan",
+    "follow": "Takip et",
+    "following": "Takip ediliyor",
+    "followers": "takipçi",
+    "anonymous": "Anonim mühendis",
+    "completeness": "Profil tamamlanma",
+    "completeHint": "Profilini tamamla, seni bulmaları kolaylaşsın",
+    "share": "Paylaş",
+    "copyLink": "Linki kopyala",
+    "copied": "Kopyalandı ✓",
+    "qr": "QR kod",
+    "wizard": {
+      "greeting": "Merhaba {name}! 👋",
+      "next": "Devam",
+      "back": "Geri",
+      "finish": "Bitir 🎉",
+      "progress": "{current} / {total}",
+      "steps": {
+        "welcome": { "title": "Tanışalım", "subtitle": "Seni toplulukta nasıl görelim?" },
+        "status": { "title": "Seni en iyi ne tanımlar?", "subtitle": "Dilersen boş bırak — hiçbir şey zorunlu değil" },
+        "location": { "title": "Neredesin? 🌍", "subtitle": "Hangi ülke ve şehirdesin?" },
+        "work": { "title": "Ne yapıyorsun? 💼", "subtitle": "Pozisyon, kurum ve eğitim" },
+        "fields": { "title": "Alanların neler? ⚙️", "subtitle": "Sana uyan mühendislik alanlarını seç" },
+        "skillsInterests": { "title": "Yetenek & ilgi ✨", "subtitle": "Birkaç anahtar kelime ekle" },
+        "about": { "title": "Kendini anlat 📝", "subtitle": "Kısa bir tanıtım ve bağlantıların" },
+        "help": { "title": "Nasıl katkı sunarsın? 🤝", "subtitle": "Mentorluk ve iş birliği tercihlerin" }
+      }
+    }
   },
   "directory": {
     "title": "Mühendis dizini",
@@ -84,6 +136,7 @@
     "mentoring": "Mentorluk",
     "collaborators": "İş birliği",
     "apply": "Uygula",
+    "results": "{count, plural, =0 {Sonuç yok} other {# mühendis}}",
     "empty": "Mühendis bulunamadı."
   },
   "feed": {

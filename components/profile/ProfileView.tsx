@@ -1,33 +1,60 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ENGINEERING_FIELDS, labelFor } from "@/lib/data/taxonomy";
+import { countryName } from "@/lib/data/places";
+import { profileCompleteness } from "@/lib/profile/completeness";
+import {
+  Avatar,
+  Badge,
+  Card,
+  Chip,
+  ProgressBar,
+  SectionHeader,
+  buttonClass,
+} from "@/components/ui/kit";
+import { FollowButton } from "@/components/profile/FollowButton";
+import { ShareProfile } from "@/components/profile/ShareProfile";
 import type { Profile } from "@/db/schema";
 
 interface Props {
   profile: Profile;
+  image?: string | null;
   fieldSlugs: string[];
   skills: string[];
   interests: string[];
   locale: string;
   variant: "self" | "public";
   telegram?: { username: string | null; id: number | null };
+  followState?: { isFollowing: boolean; followers: number };
+  shareUrl?: string;
 }
 
 export async function ProfileView({
   profile,
+  image,
   fieldSlugs,
   skills,
   interests,
   locale,
   variant,
   telegram,
+  followState,
+  shareUrl,
 }: Props) {
   const t = await getTranslations("profile");
+
+  const name = profile.displayName || t("anonymous");
+  const country = countryName(profile.country, locale);
+  const location = [profile.city, country].filter(Boolean).join(", ");
+  const roleLine = [profile.currentRole, profile.company]
+    .filter(Boolean)
+    .join(" · ");
 
   const fieldLabels = fieldSlugs
     .map((slug) => ENGINEERING_FIELDS.find((f) => f.slug === slug))
     .filter(Boolean)
     .map((f) => labelFor(f!.labels, locale));
+  const allFieldChips = [...fieldLabels, ...(profile.customFields ?? [])];
 
   const links = (profile.links ?? {}) as Record<string, string>;
   const linkEntries = Object.entries(links).filter(([, v]) => v);
@@ -38,81 +65,151 @@ export async function ProfileView({
       ? `tg://user?id=${telegram.id}`
       : null;
 
+  const { score, missing } =
+    variant === "self"
+      ? profileCompleteness({ profile, fieldSlugs, skills, image })
+      : { score: 1, missing: [] };
+
   return (
     <div className="w-full">
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold">{profile.displayName}</h1>
-          {profile.headline && (
-            <p className="mt-1 opacity-70">{profile.headline}</p>
-          )}
-          <p className="mt-1 text-sm opacity-60">
-            {[profile.currentRole, profile.company].filter(Boolean).join(" · ")}
-          </p>
-          <p className="text-sm opacity-60">
-            {[profile.city, profile.country].filter(Boolean).join(", ")}
-          </p>
+      {/* Üst kart: avatar + isim + konum + aksiyon */}
+      <Card className="p-5">
+        <div className="flex items-start gap-4">
+          <Avatar name={name} src={image} seed={profile.userId} size={72} />
+          <div className="min-w-0 flex-1">
+            <h1 className="truncate text-xl font-bold">{name}</h1>
+            {profile.headline && (
+              <p className="mt-0.5 text-[var(--color-hint)]">
+                {profile.headline}
+              </p>
+            )}
+            {roleLine && <p className="mt-1 text-sm">{roleLine}</p>}
+            {location && (
+              <p className="text-sm text-[var(--color-hint)]">📍 {location}</p>
+            )}
+            {variant === "public" && followState && (
+              <p className="mt-1 text-sm text-[var(--color-hint)]">
+                {followState.followers} {t("followers")}
+              </p>
+            )}
+          </div>
         </div>
-        {variant === "self" ? (
-          <Link
-            href="/profile/edit"
-            className="shrink-0 rounded-full border border-foreground/20 px-4 py-2 text-sm hover:bg-foreground/5"
-          >
-            {t("editCta")}
-          </Link>
-        ) : connectHref ? (
-          <a
-            href={connectHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 rounded-full bg-[#229ED9] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
-          >
-            {t("connect")}
-          </a>
-        ) : null}
-      </div>
 
-      <div className="flex flex-wrap gap-2">
-        {profile.openToMentoring && <Badge>{t("openToMentoring")}</Badge>}
-        {profile.lookingForCollaborators && (
-          <Badge>{t("lookingForCollaborators")}</Badge>
+        {/* Aksiyonlar */}
+        <div className="mt-4 flex flex-wrap gap-2">
+          {variant === "self" ? (
+            <Link href="/profile/edit" className={buttonClass("secondary")}>
+              {t("editCta")}
+            </Link>
+          ) : (
+            <>
+              {connectHref && (
+                <a
+                  href={connectHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonClass("primary")}
+                >
+                  {t("connect")}
+                </a>
+              )}
+              {followState && (
+                <FollowButton
+                  targetUserId={profile.userId}
+                  initialFollowing={followState.isFollowing}
+                />
+              )}
+            </>
+          )}
+          {shareUrl && (
+            <ShareProfile url={shareUrl} name={name} />
+          )}
+        </div>
+
+        {/* Tamamlanma ölçer (sadece kendi profili) */}
+        {variant === "self" && score < 1 && (
+          <div className="mt-5">
+            <div className="mb-1.5 flex items-center justify-between text-xs text-[var(--color-hint)]">
+              <span>{t("completeness")}</span>
+              <span>{Math.round(score * 100)}%</span>
+            </div>
+            <ProgressBar value={score} />
+            {missing.length > 0 && (
+              <p className="mt-2 text-xs text-[var(--color-hint)]">
+                {t("completeHint")}
+              </p>
+            )}
+          </div>
         )}
-      </div>
+      </Card>
 
-      {fieldLabels.length > 0 && (
+      {/* Durum + bayraklar */}
+      {(profile.status ||
+        profile.openToMentoring ||
+        profile.lookingForCollaborators) && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {profile.status && (
+            <Badge tone="accent">{t(`status.${profile.status}`)}</Badge>
+          )}
+          {profile.openToMentoring && (
+            <Badge tone="success">{t("openToMentoring")}</Badge>
+          )}
+          {profile.lookingForCollaborators && (
+            <Badge tone="success">{t("lookingForCollaborators")}</Badge>
+          )}
+        </div>
+      )}
+
+      {allFieldChips.length > 0 && (
         <Section title={t("fields")}>
-          <Chips items={fieldLabels} />
+          <ChipWrap items={allFieldChips} />
         </Section>
       )}
       {skills.length > 0 && (
         <Section title={t("skills")}>
-          <Chips items={skills} />
+          <ChipWrap items={skills} />
         </Section>
       )}
       {interests.length > 0 && (
         <Section title={t("interests")}>
-          <Chips items={interests} />
+          <ChipWrap items={interests} />
         </Section>
       )}
       {profile.bio && (
         <Section title={t("bio")}>
-          <p className="whitespace-pre-wrap text-sm opacity-80">{profile.bio}</p>
+          <Card className="p-4">
+            <p className="whitespace-pre-wrap text-sm">{profile.bio}</p>
+          </Card>
         </Section>
       )}
       {linkEntries.length > 0 && (
         <Section title={t("links")}>
-          <ul className="flex flex-col gap-1 text-sm">
+          <Card className="divide-y divide-[var(--color-separator)]">
             {linkEntries.map(([k, v]) => (
-              <li key={k}>
-                <span className="opacity-60">{t(k)}: </span>
-                <span className="break-all">{v}</span>
-              </li>
+              <a
+                key={k}
+                href={normalizeUrl(v)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between px-4 py-3 text-sm hover:bg-[var(--color-secondary)]"
+              >
+                <span className="text-[var(--color-hint)]">{t(k)}</span>
+                <span className="ml-3 truncate text-[var(--color-link)]">
+                  {v}
+                </span>
+              </a>
             ))}
-          </ul>
+          </Card>
         </Section>
       )}
     </div>
   );
+}
+
+function normalizeUrl(v: string): string {
+  if (/^https?:\/\//i.test(v)) return v;
+  if (v.startsWith("@")) return `https://t.me/${v.slice(1)}`;
+  return `https://${v}`;
 }
 
 function Section({
@@ -123,31 +220,19 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-6">
-      <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide opacity-50">
-        {title}
-      </h2>
+    <section>
+      <SectionHeader>{title}</SectionHeader>
       {children}
     </section>
   );
 }
 
-function Chips({ items }: { items: string[] }) {
+function ChipWrap({ items }: { items: string[] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {items.map((i) => (
-        <span key={i} className="rounded-full bg-foreground/10 px-3 py-1 text-sm">
-          {i}
-        </span>
+        <Chip key={i}>{i}</Chip>
       ))}
     </div>
-  );
-}
-
-function Badge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="rounded-full bg-green-500/15 px-3 py-1 text-sm text-green-600 dark:text-green-400">
-      {children}
-    </span>
   );
 }

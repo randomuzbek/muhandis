@@ -83,14 +83,20 @@ export const profiles = pgTable("profiles", {
   userId: text("user_id")
     .primaryKey()
     .references(() => users.id, { onDelete: "cascade" }),
-  displayName: text("display_name").notNull(),
+  // Hiçbir alan zorunlu değil — kullanıcı anonim/takma adlı kalabilir.
+  displayName: text("display_name"),
   headline: text("headline"),
   bio: text("bio"),
+  // Kullanıcı durumu: 'student' | 'working' | 'seeking' | 'enthusiast' | 'other'
+  status: text("status"),
+  // Ülke ISO alpha-2 kodu (ör. "TR"); isim dile göre Intl.DisplayNames ile gösterilir.
   country: text("country"),
   city: text("city"),
   currentRole: text("current_role"),
   company: text("company"),
   educationLevel: text("education_level"),
+  // Taksonomi dışı, kullanıcının kendi eklediği serbest alanlar
+  customFields: jsonb("custom_fields").$type<string[]>().default([]),
   openToMentoring: boolean("open_to_mentoring").notNull().default(false),
   lookingForCollaborators: boolean("looking_for_collaborators")
     .notNull()
@@ -200,6 +206,24 @@ export const comments = pgTable(
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
   },
   (t) => [index("comments_post_idx").on(t.postId)],
+);
+
+// Takip / yer imi: bir kullanıcı başka bir kullanıcıyı takip eder.
+export const follows = pgTable(
+  "follows",
+  {
+    followerId: text("follower_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    followingId: text("following_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.followerId, t.followingId] }),
+    index("follows_following_idx").on(t.followingId),
+  ],
 );
 
 export const reactions = pgTable(

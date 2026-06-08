@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { addComment } from "@/lib/actions/posts";
+import { buttonClass, fieldClass, cn } from "@/components/ui/kit";
 
 export function CommentForm({ postId }: { postId: number }) {
   const t = useTranslations("feed");
@@ -26,16 +27,17 @@ export function CommentForm({ postId }: { postId: number }) {
   return (
     <form onSubmit={onSubmit} className="mt-4 flex flex-col gap-2">
       <textarea
-        className="w-full rounded-lg border border-foreground/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-foreground/40"
+        className={cn(fieldClass, "min-h-24 resize-y")}
         placeholder={t("commentPlaceholder")}
         value={body}
         onChange={(e) => setBody(e.target.value)}
         rows={3}
+        maxLength={4000}
       />
       <button
         type="submit"
         disabled={saving || !body.trim()}
-        className="self-start rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background disabled:opacity-50"
+        className={buttonClass("primary", "self-end")}
       >
         {saving ? t("sending") : t("addComment")}
       </button>

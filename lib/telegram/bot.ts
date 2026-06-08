@@ -18,7 +18,8 @@ export function getBot(): Bot {
 }
 
 function registerHandlers(bot: Bot) {
-  const miniAppUrl = process.env.NEXT_PUBLIC_MINI_APP_URL;
+  // Inline web_app butonu doğrudan HTTPS uygulama adresi ister (t.me linki DEĞİL).
+  const miniAppUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   bot.command("start", async (ctx) => {
     const name = ctx.from?.first_name ?? "muhandis";

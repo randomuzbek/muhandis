@@ -22,7 +22,7 @@ export interface DirectoryFilters {
 
 export interface DirectoryCard {
   userId: string;
-  displayName: string;
+  displayName: string | null;
   headline: string | null;
   country: string | null;
   city: string | null;
@@ -52,7 +52,8 @@ export async function searchProfiles(
     );
   }
   if (filters.country) {
-    conditions.push(ilike(profiles.country, `%${filters.country}%`));
+    // Ülke artık ISO kodu (ör. "TR") olarak saklanıyor → tam eşleşme.
+    conditions.push(eq(profiles.country, filters.country));
   }
   if (filters.mentoring) {
     conditions.push(eq(profiles.openToMentoring, true));
@@ -125,7 +126,12 @@ export async function getPublicProfile(userId: string) {
 
   const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
-    columns: { telegramUsername: true, telegramId: true },
+    columns: {
+      telegramUsername: true,
+      telegramId: true,
+      image: true,
+      photoUrl: true,
+    },
   });
 
   const fieldRows = await db
@@ -151,6 +157,7 @@ export async function getPublicProfile(userId: string) {
 
   return {
     profile,
+    image: user?.image ?? user?.photoUrl ?? null,
     fieldSlugs: fieldRows.map((r) => r.slug),
     skills: skillRows.map((r) => r.name),
     interests: interestRows.map((r) => r.name),
