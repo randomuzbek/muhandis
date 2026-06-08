@@ -173,7 +173,49 @@
     "addComment": "Izoh qoldirish",
     "sending": "Yuborilmoqda...",
     "like": "Yoqdi",
-    "signInToPost": "Izoh qoldirish uchun kiring"
+    "signInToPost": "Izoh qoldirish uchun kiring",
+    "editPost": "Postni tahrirlash",
+    "update": "Yangilash",
+    "updating": "Yangilanmoqda..."
+  },
+  "actions": {
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "report": "Shikoyat qilish",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "send": "Yuborish",
+    "sending": "Yuborilmoqda...",
+    "menu": "Amallar",
+    "confirmDelete": "O'chirilsinmi? Buni qaytarib bo'lmaydi.",
+    "reported": "Shikoyat yuborildi",
+    "reportTitle": "Shikoyat qilish",
+    "reportSubtitle": "Nima xato ekanini yozing (ixtiyoriy). Adminlar ko'rib chiqadi.",
+    "reportPlaceholder": "Sabab (ixtiyoriy)",
+    "rateLimit": "Juda tez — biroz sekinlashtiring va qayta urinib ko'ring.",
+    "errorGeneric": "Xatolik yuz berdi. Qayta urinib ko'ring."
+  },
+  "legal": {
+    "privacyTitle": "Maxfiylik siyosati",
+    "updated": "Oxirgi yangilanish",
+    "intro": "Muhandis — o'zbek muhandislari uchun ochiq kodli hamjamiyat. Bu sahifa qanday ma'lumotlarni va nima uchun ishlatishimizni tushuntiradi. Faqat tarmoq ishlashi uchun zarur bo'lgan minimal ma'lumotni saqlaymiz.",
+    "collectTitle": "Nimani yig'amiz",
+    "collectBody": "Telegram orqali kirganingizda Telegram id, ism, foydalanuvchi nomi, rasm va tilingizni olamiz. Profilingizga qo'shgan ma'lumotlar (bio, sohalar, ko'nikmalar, havolalar) hamda e'lon va izohlaringiz ham saqlanadi.",
+    "useTitle": "Qanday ishlatamiz",
+    "useBody": "Sizni muhandislar katalogida ko'rsatish, forumni ishlatish, Telegram bildirishnomalarini yuborish (izohlar, yangi kuzatuvchilar) va boshqa muhandislar bilan bog'lash uchun. Hech narsa majburiy emas — anonim qolishingiz mumkin.",
+    "shareTitle": "Ulashish",
+    "shareBody": "Ma'lumotlaringizni sotmaymiz. Profilingizdagi ma'lumotlar siz xohlagancha hamjamiyatga ko'rinadi. Kirish Telegram va (ixtiyoriy) Google orqali. Infratuzilma sifatida Neon (ma'lumotlar bazasi) va Vercel (hosting) ishlatamiz.",
+    "deleteTitle": "Sizning nazoratingiz",
+    "deleteBody": "E'lon va izohlaringizni istalgan vaqtda tahrirlash yoki o'chirish mumkin. Hisob va profilingizni butunlay o'chirish uchun quyidagi Telegram hamjamiyati orqali murojaat qiling.",
+    "openSourceTitle": "Ochiq kod",
+    "openSourceBody": "To'liq manba kodi MIT litsenziyasi ostida ochiq — har kim ma'lumotlar qanday ishlanishini ko'rishi yoki o'z nusxasini joylashtirishi mumkin.",
+    "contactTitle": "Aloqa",
+    "contactBody": "Maxfiylik bo'yicha savollaringiz bormi? Muhandis Telegram hamjamiyati orqali bog'laning."
+  },
+  "footer": {
+    "privacy": "Maxfiylik",
+    "source": "Manba kodi",
+    "community": "Hamjamiyat"
   },
   "auth": {
     "signInTitle": "Kirish",

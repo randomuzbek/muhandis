@@ -3,23 +3,38 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { createPost } from "@/lib/actions/posts";
+import { createPost, updatePost } from "@/lib/actions/posts";
 import { POST_TYPES, type PostType } from "@/lib/data/posts";
 import { Card, Chip, buttonClass, fieldClass, cn } from "@/components/ui/kit";
 
 interface Props {
   topics: { slug: string; label: string }[];
+  // Verilirse düzenleme modu (mevcut gönderiyi günceller).
+  initial?: {
+    id: number;
+    type: PostType;
+    topicSlug: string;
+    title: string;
+    body: string;
+  };
 }
 
 const MAX_BODY = 8000;
 
-export function NewPostForm({ topics }: Props) {
+function errorMessage(t: (k: string) => string, code: string): string {
+  if (code === "RATE_LIMIT") return t("rateLimit");
+  return t("errorGeneric");
+}
+
+export function NewPostForm({ topics, initial }: Props) {
   const t = useTranslations("feed");
+  const tErr = useTranslations("actions");
   const router = useRouter();
-  const [type, setType] = useState<PostType>("post");
-  const [topicSlug, setTopicSlug] = useState("");
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const editing = !!initial;
+  const [type, setType] = useState<PostType>(initial?.type ?? "post");
+  const [topicSlug, setTopicSlug] = useState(initial?.topicSlug ?? "");
+  const [title, setTitle] = useState(initial?.title ?? "");
+  const [body, setBody] = useState(initial?.body ?? "");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,13 +42,15 @@ export function NewPostForm({ topics }: Props) {
     e.preventDefault();
     setSaving(true);
     setError(null);
-    const res = await createPost({ type, topicSlug, title, body });
+    const res = initial
+      ? await updatePost({ id: initial.id, type, topicSlug, title, body })
+      : await createPost({ type, topicSlug, title, body });
     setSaving(false);
     if (res.ok) {
-      router.push(`/feed/${res.id}`);
+      router.push(`/feed/${initial ? initial.id : res.id}`);
       router.refresh();
     } else {
-      setError(res.error);
+      setError(errorMessage(tErr, res.error));
     }
   }
 
@@ -112,7 +129,13 @@ export function NewPostForm({ topics }: Props) {
         disabled={saving || !body.trim()}
         className={buttonClass("primary", "self-start")}
       >
-        {saving ? t("publishing") : t("publish")}
+        {saving
+          ? editing
+            ? t("updating")
+            : t("publishing")
+          : editing
+            ? t("update")
+            : t("publish")}
       </button>
     </form>
   );

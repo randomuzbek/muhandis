@@ -173,7 +173,49 @@
     "addComment": "Yorum yap",
     "sending": "Gönderiliyor...",
     "like": "Beğen",
-    "signInToPost": "Yorum yapmak için giriş yap"
+    "signInToPost": "Yorum yapmak için giriş yap",
+    "editPost": "Gönderiyi düzenle",
+    "update": "Güncelle",
+    "updating": "Güncelleniyor..."
+  },
+  "actions": {
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "report": "Şikayet et",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "send": "Gönder",
+    "sending": "Gönderiliyor...",
+    "menu": "İşlemler",
+    "confirmDelete": "Silinsin mi? Bu geri alınamaz.",
+    "reported": "Şikayet gönderildi",
+    "reportTitle": "Şikayet et",
+    "reportSubtitle": "Neyin yanlış olduğunu yaz (isteğe bağlı). Adminler inceleyecek.",
+    "reportPlaceholder": "Sebep (isteğe bağlı)",
+    "rateLimit": "Çok hızlı — biraz yavaşla ve birazdan tekrar dene.",
+    "errorGeneric": "Bir şeyler ters gitti. Tekrar dene."
+  },
+  "legal": {
+    "privacyTitle": "Gizlilik Politikası",
+    "updated": "Son güncelleme",
+    "intro": "Muhandis, Özbek mühendisler için açık kaynaklı bir topluluktur. Bu sayfa hangi verileri neden işlediğimizi açıklar. Ağı çalıştırmak için gereken asgari veriyle yetiniyoruz.",
+    "collectTitle": "Ne topluyoruz",
+    "collectBody": "Telegram ile giriş yaptığında Telegram id, ad, kullanıcı adı, fotoğraf ve dilini alırız. Profiline eklediklerini (biyografi, alanlar, yetenekler, bağlantılar) ve yayınladığın gönderi ve yorumları da saklarız.",
+    "useTitle": "Nasıl kullanıyoruz",
+    "useBody": "Seni mühendis dizininde göstermek, forumu çalıştırmak, Telegram bildirimleri göndermek (yorumlar, yeni takipçiler) ve seni diğer mühendislerle bağlamak için. Hiçbir şey zorunlu değil — anonim kalabilirsin.",
+    "shareTitle": "Paylaşım",
+    "shareBody": "Verilerini satmıyoruz. Profil bilgilerin, senin seçtiğin kadarıyla topluluğa görünür. Kimlik doğrulama Telegram ve (isteğe bağlı) Google üzerinden yapılır. Altyapı sağlayıcı olarak Neon (veritabanı) ve Vercel (barındırma) kullanıyoruz.",
+    "deleteTitle": "Senin kontrolün",
+    "deleteBody": "Gönderilerini ve yorumlarını istediğin zaman düzenleyebilir veya silebilirsin. Hesabını ve profilini tamamen silmek için aşağıdaki Telegram topluluğu üzerinden bize ulaş.",
+    "openSourceTitle": "Açık kaynak",
+    "openSourceBody": "Tüm kaynak kodu MIT lisansıyla açıktır — herkes verilerin nasıl işlendiğini inceleyebilir veya kendi kopyasını barındırabilir.",
+    "contactTitle": "İletişim",
+    "contactBody": "Gizlilik hakkında sorular mı var? Muhandis Telegram topluluğu üzerinden ekibe ulaş."
+  },
+  "footer": {
+    "privacy": "Gizlilik",
+    "source": "Kaynak kod",
+    "community": "Topluluk"
   },
   "auth": {
     "signInTitle": "Giriş",

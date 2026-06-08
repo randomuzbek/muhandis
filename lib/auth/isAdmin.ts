@@ -13,6 +13,11 @@ function adminIds(): Set<number> {
   );
 }
 
+// Adminlerin Telegram id listesi (bot bildirimleri için).
+export function adminTelegramIds(): number[] {
+  return [...adminIds()];
+}
+
 export async function isAdmin(userId: string | undefined): Promise<boolean> {
   if (!userId) return false;
   const ids = adminIds();

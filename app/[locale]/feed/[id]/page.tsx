@@ -3,8 +3,11 @@ import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { getPost } from "@/lib/queries/feed";
 import { getSessionUser } from "@/lib/auth/session";
+import { isAdmin } from "@/lib/auth/isAdmin";
 import { LikeButton } from "@/components/feed/LikeButton";
 import { CommentForm } from "@/components/feed/CommentForm";
+import { CommentItem } from "@/components/feed/CommentItem";
+import { PostActions } from "@/components/feed/PostActions";
 import { TOPICS, labelFor } from "@/lib/data/taxonomy";
 import { formatRelative } from "@/lib/format/time";
 import { Avatar, Badge, Card, buttonClass } from "@/components/ui/kit";
@@ -32,6 +35,8 @@ export default async function PostPage({
   const { post, comments, reactionCount } = data;
   const t = await getTranslations("feed");
   const user = await getSessionUser();
+  const me = user?.id;
+  const admin = await isAdmin(me);
 
   const topicLabel = post.topicSlug
     ? labelFor(
@@ -71,6 +76,12 @@ export default async function PostPage({
           <Badge tone={TYPE_TONE[post.type] ?? "neutral"}>
             {t(`type.${post.type as "post"}`)}
           </Badge>
+          <PostActions
+            postId={post.id}
+            isOwner={post.authorId === me}
+            isAdmin={admin}
+            canReport={!!me && post.authorId !== me}
+          />
         </div>
 
         {post.title && (
@@ -102,30 +113,13 @@ export default async function PostPage({
           <ul className="flex flex-col gap-2">
             {comments.map((c) => (
               <li key={c.id}>
-                <Card className="p-3.5">
-                  <div className="flex items-center gap-2.5">
-                    <Link href={`/u/${c.authorId}`}>
-                      <Avatar
-                        name={c.authorName}
-                        src={c.authorImage}
-                        seed={c.authorId}
-                        size={32}
-                      />
-                    </Link>
-                    <Link
-                      href={`/u/${c.authorId}`}
-                      className="truncate text-sm font-medium hover:underline"
-                    >
-                      {c.authorName}
-                    </Link>
-                    <span className="text-xs text-[var(--color-hint)]">
-                      · {formatRelative(c.createdAt, locale)}
-                    </span>
-                  </div>
-                  <p className="mt-2 whitespace-pre-wrap text-sm text-[var(--color-foreground)]/85">
-                    {c.body}
-                  </p>
-                </Card>
+                <CommentItem
+                  comment={c}
+                  locale={locale}
+                  isOwner={c.authorId === me}
+                  isAdmin={admin}
+                  canReport={!!me && c.authorId !== me}
+                />
               </li>
             ))}
           </ul>

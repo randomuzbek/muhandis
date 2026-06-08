@@ -258,6 +258,27 @@ export const reactions = pgTable(
   ],
 );
 
+// Şikayet / raporlama: bir kullanıcı bir gönderi ya da yorumu bildirir.
+// Adminler bot DM ile haberdar edilir; içeriği gönderi sayfasından silebilir.
+export const reports = pgTable(
+  "reports",
+  {
+    id: serial("id").primaryKey(),
+    reporterId: text("reporter_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    postId: integer("post_id").references(() => posts.id, {
+      onDelete: "cascade",
+    }),
+    commentId: integer("comment_id").references(() => comments.id, {
+      onDelete: "cascade",
+    }),
+    reason: text("reason"),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (t) => [index("reports_created_idx").on(t.createdAt)],
+);
+
 // ---------------------------------------------------------------------------
 // İlişkiler (Drizzle relational queries için)
 // ---------------------------------------------------------------------------

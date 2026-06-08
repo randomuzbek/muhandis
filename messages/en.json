@@ -173,7 +173,49 @@
     "addComment": "Comment",
     "sending": "Sending...",
     "like": "Like",
-    "signInToPost": "Sign in to comment"
+    "signInToPost": "Sign in to comment",
+    "editPost": "Edit post",
+    "update": "Update",
+    "updating": "Updating..."
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "report": "Report",
+    "save": "Save",
+    "cancel": "Cancel",
+    "send": "Send",
+    "sending": "Sending...",
+    "menu": "Actions",
+    "confirmDelete": "Delete this? This can't be undone.",
+    "reported": "Reported",
+    "reportTitle": "Report content",
+    "reportSubtitle": "Tell us what's wrong (optional). Admins will review it.",
+    "reportPlaceholder": "Reason (optional)",
+    "rateLimit": "Too fast — please slow down and try again shortly.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "legal": {
+    "privacyTitle": "Privacy Policy",
+    "updated": "Last updated",
+    "intro": "Muhandis is an open-source community for Uzbek engineers. This page explains what data we handle and why. We keep it to the minimum needed to run the network.",
+    "collectTitle": "What we collect",
+    "collectBody": "When you sign in with Telegram we receive your Telegram id, name, username, photo and language. We also store what you choose to add to your profile (bio, fields, skills, links) and the posts and comments you publish.",
+    "useTitle": "How we use it",
+    "useBody": "To show you in the engineer directory, power the forum, send you Telegram notifications (comments, new followers) and connect you with other engineers. Nothing is required — you can stay anonymous.",
+    "shareTitle": "Sharing",
+    "shareBody": "We don't sell your data. Profile details you fill in are visible to the community as you choose. Authentication goes through Telegram and (optionally) Google. We use Neon (database) and Vercel (hosting) as infrastructure providers.",
+    "deleteTitle": "Your control",
+    "deleteBody": "You can edit or delete your posts and comments at any time. To delete your account and profile entirely, contact us via the Telegram community below.",
+    "openSourceTitle": "Open source",
+    "openSourceBody": "The full source code is public under the MIT license, so anyone can inspect how data is handled or self-host their own instance.",
+    "contactTitle": "Contact",
+    "contactBody": "Questions about privacy? Reach the team through the Muhandis Telegram community."
+  },
+  "footer": {
+    "privacy": "Privacy",
+    "source": "Source code",
+    "community": "Community"
   },
   "auth": {
     "signInTitle": "Sign in",
