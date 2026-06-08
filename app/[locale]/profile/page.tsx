@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { getSessionUser } from "@/lib/auth/session";
 import { loadMyProfile } from "@/lib/actions/profile";
+import { getReferralCount } from "@/lib/queries/referral";
+import { inviteLink } from "@/lib/telegram/inviteLink";
 import { ProfileView } from "@/components/profile/ProfileView";
 import { EmptyState, buttonClass } from "@/components/ui/kit";
 
@@ -40,6 +42,11 @@ export default async function ProfilePage({
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
   const shareUrl = `${appUrl}/${locale}/u/${profile.userId}`;
 
+  const link = inviteLink(profile.userId);
+  const invite = link
+    ? { link, count: await getReferralCount(profile.userId) }
+    : undefined;
+
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8">
       <ProfileView
@@ -51,6 +58,7 @@ export default async function ProfilePage({
         locale={locale}
         variant="self"
         shareUrl={shareUrl}
+        invite={invite}
       />
     </main>
   );

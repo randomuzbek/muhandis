@@ -32,8 +32,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const token = process.env.TELEGRAM_BOT_TOKEN;
         if (!token) return null;
         try {
-          const { user: tgUser } = validateInitData(initData, token);
-          const user = await upsertTelegramUser(tgUser);
+          const { user: tgUser, startParam } = validateInitData(initData, token);
+          const user = await upsertTelegramUser(tgUser, startParam);
           return {
             id: user.id,
             name: user.name,

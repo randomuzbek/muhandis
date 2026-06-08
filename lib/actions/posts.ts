@@ -3,11 +3,10 @@
 import { z } from "zod";
 import { eq, and } from "drizzle-orm";
 import { db } from "@/db";
-import { posts, comments, reactions, topics, users } from "@/db/schema";
+import { posts, comments, reactions, topics } from "@/db/schema";
 import { requireUserId } from "@/lib/auth/session";
-import { notifyUser } from "@/lib/telegram/bot";
+import { notifyComment } from "@/lib/telegram/notifications";
 import { POST_TYPES } from "@/lib/data/posts";
-import { routing } from "@/i18n/routing";
 
 const createSchema = z.object({
   type: z.enum(POST_TYPES).default("post"),
@@ -85,7 +84,7 @@ export async function addComment(
 
   // Yazara Telegram bildirimi (kendisi değilse)
   if (post.authorId !== userId) {
-    void notifyPostAuthor(post.authorId, postId, post.title);
+    void notifyComment(post.authorId, postId, post.title);
   }
 
   return { ok: true };
@@ -114,29 +113,4 @@ export async function toggleReaction(
 
   await db.insert(reactions).values({ postId, userId }).onConflictDoNothing();
   return { ok: true, liked: true };
-}
-
-async function notifyPostAuthor(
-  authorId: string,
-  postId: number,
-  title: string | null,
-) {
-  const author = await db.query.users.findFirst({
-    where: eq(users.id, authorId),
-    columns: { telegramId: true, languageCode: true },
-  });
-  if (!author?.telegramId) return;
-
-  const locale =
-    author.languageCode &&
-    (routing.locales as readonly string[]).includes(author.languageCode)
-      ? author.languageCode
-      : routing.defaultLocale;
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? "";
-  const link = `${base}/${locale}/feed/${postId}`;
-  const label = title ? `"${title}"` : "postingiz";
-  await notifyUser(
-    author.telegramId,
-    `💬 ${label} ostiga yangi izoh qoldirildi.\n${link}`,
-  );
 }

@@ -10,6 +10,7 @@ import {
   uniqueIndex,
   index,
   serial,
+  type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
@@ -32,6 +33,21 @@ export const users = pgTable("users", {
   telegramUsername: text("telegram_username"),
   languageCode: text("language_code"),
   photoUrl: text("photo_url"),
+  // Bu kullanıcıyı davet eden kullanıcı (referans). Yalnızca ilk kayıtta set edilir.
+  referredBy: text("referred_by").references((): AnyPgColumn => users.id, {
+    onDelete: "set null",
+  }),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+});
+
+// Davet (referans) talebi: bir kullanıcı bir Telegram id'sini davet ettiğinde,
+// o id Mini App'e girip hesap açana kadar burada "bekleyen" olarak tutulur.
+// Hesap oluşunca upsertTelegramUser bunu tüketip users.referredBy'a yazar.
+export const referralClaims = pgTable("referral_claims", {
+  telegramId: bigint("telegram_id", { mode: "number" }).primaryKey(),
+  referrerUserId: text("referrer_user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
 });
 

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/kit";
 import { FollowButton } from "@/components/profile/FollowButton";
 import { ShareProfile } from "@/components/profile/ShareProfile";
+import { InviteCard } from "@/components/profile/InviteCard";
 import type { Profile } from "@/db/schema";
 
 interface Props {
@@ -27,6 +28,7 @@ interface Props {
   telegram?: { username: string | null; id: number | null };
   followState?: { isFollowing: boolean; followers: number };
   shareUrl?: string;
+  invite?: { link: string; count: number };
 }
 
 export async function ProfileView({
@@ -40,6 +42,7 @@ export async function ProfileView({
   telegram,
   followState,
   shareUrl,
+  invite,
 }: Props) {
   const t = await getTranslations("profile");
 
@@ -142,6 +145,11 @@ export async function ProfileView({
           </div>
         )}
       </Card>
+
+      {/* Davet kartı (yalnızca kendi profili) */}
+      {variant === "self" && invite && (
+        <InviteCard link={invite.link} count={invite.count} />
+      )}
 
       {/* Durum + bayraklar */}
       {(profile.status ||

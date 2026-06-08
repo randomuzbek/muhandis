@@ -128,6 +128,18 @@
       }
     }
   },
+  "invite": {
+    "title": "Muhandislarni taklif qiling",
+    "subtitle": "Tarmoq siz olib kelgan har bir muhandis bilan kengayadi. Shaxsiy havolangizni ulashing.",
+    "count": "{count, plural, other {# muhandis siz orqali qo'shildi}}",
+    "invite": "Taklif qilish",
+    "showQr": "QR / havola",
+    "qr": "QR kod",
+    "copyLink": "Havolani nusxalash",
+    "copied": "Nusxalandi ✓",
+    "shareTitle": "Muhandis",
+    "shareText": "Muhandis'ga qo'shiling — o'zbek muhandislari tarmog'i."
+  },
   "directory": {
     "title": "Muhandislar katalogi",
     "searchPlaceholder": "Ism, lavozim yoki tashkilot bo'yicha qidirish",

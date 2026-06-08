@@ -16,6 +16,8 @@ export interface TelegramUser {
 export interface ValidatedInitData {
   user: TelegramUser;
   authDate: Date;
+  // Mini App `?startapp=` ile açıldığında gelen parametre (ör. "ref_<userId>").
+  startParam?: string;
   raw: string;
 }
 
@@ -70,6 +72,7 @@ export function validateInitData(
   return {
     user,
     authDate: new Date(authDateSeconds * 1000),
+    startParam: params.get("start_param") ?? undefined,
     raw: initData,
   };
 }

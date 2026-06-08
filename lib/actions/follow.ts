@@ -4,6 +4,7 @@ import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { follows } from "@/db/schema";
 import { getSessionUser, requireUserId } from "@/lib/auth/session";
+import { notifyFollow } from "@/lib/telegram/notifications";
 
 export async function toggleFollow(
   targetUserId: string,
@@ -36,6 +37,9 @@ export async function toggleFollow(
     .insert(follows)
     .values({ followerId: me, followingId: targetUserId })
     .onConflictDoNothing();
+
+  // Takip edilene Telegram bildirimi (kendini takip edemez; üstte engellendi)
+  void notifyFollow(targetUserId, me);
   return { ok: true, following: true };
 }
 

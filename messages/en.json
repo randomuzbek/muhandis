@@ -128,6 +128,18 @@
       }
     }
   },
+  "invite": {
+    "title": "Invite engineers",
+    "subtitle": "The network grows with every engineer you bring in. Share your personal link.",
+    "count": "{count, plural, one {# engineer joined via you} other {# engineers joined via you}}",
+    "invite": "Invite",
+    "showQr": "QR / link",
+    "qr": "QR code",
+    "copyLink": "Copy link",
+    "copied": "Copied ✓",
+    "shareTitle": "Muhandis",
+    "shareText": "Join Muhandis — the network of Uzbek engineers."
+  },
   "directory": {
     "title": "Engineer directory",
     "searchPlaceholder": "Search by name, role or company",
