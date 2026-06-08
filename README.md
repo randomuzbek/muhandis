@@ -1,5 +1,10 @@
 # Muhandis
 
+> **Open-source network uniting Uzbek engineers worldwide** — a Telegram Mini App
+> + web app with profiles, a searchable directory, a forum, and mentorship.
+> Built with Next.js 16, TypeScript, Drizzle ORM and grammY. Contributions welcome —
+> see [CONTRIBUTING.md](./CONTRIBUTING.md). Licensed under [MIT](./LICENSE).
+
 Dünya genelinde okuyan/çalışan **Özbek mühendisleri** birleştiren ağ — bir
 **Telegram Mini App** (Telegram içinde açılan tam web uygulaması) + aynı koddan
 sunulan web sitesi.
@@ -91,3 +96,18 @@ Mini App boşken değersizdir. Açılışta:
 2. Profillerini doldurmalarını sağla → dizin "canlı" görünsün.
 3. Grupta birkaç başlangıç gönderisi/sorusu aç.
 Yazılı eşik koy (örn. "500 aktif üye olunca X").
+
+## Katkı (Contributing)
+
+Muhandis açık kaynak ve topluluk projesidir — herkes katkı verebilir: kod,
+tasarım, çeviri, dokümantasyon, fikir. Başlamak için [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+- 🐛 Hata/öneri → [issue](../../issues) aç
+- 🌍 Çeviriler `messages/` altında (uz/en/ru/tr)
+- 🔧 PR'dan önce: `npm run typecheck && npm run lint && npm run build`
+
+Topluluk: [t.me/muhandis_hub](https://t.me/muhandis_hub)
+
+## Lisans (License)
+
+[MIT](./LICENSE) — özgürce kullan, değiştir, dağıt.
