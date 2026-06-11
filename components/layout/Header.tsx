@@ -15,7 +15,7 @@ export function Header() {
 
   const tabs = [
     { href: "/directory", label: t("directory") },
-    { href: "/feed", label: t("feed") },
+    { href: "/stats", label: t("stats") },
   ];
 
   return (

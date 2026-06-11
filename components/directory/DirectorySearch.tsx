@@ -23,7 +23,7 @@ import {
   fieldClass,
 } from "@/components/ui/kit";
 
-type FieldOption = { slug: string; label: string };
+type FieldOption = { slug: string; label: string; count: number };
 
 export function DirectorySearch({
   initialResults,
@@ -104,7 +104,7 @@ export function DirectorySearch({
             <option value="">{t("allFields")}</option>
             {fieldOptions.map((f) => (
               <option key={f.slug} value={f.slug}>
-                {f.label}
+                {f.count > 0 ? `${f.label} · ${f.count}` : f.label}
               </option>
             ))}
           </select>

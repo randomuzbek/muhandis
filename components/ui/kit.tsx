@@ -177,6 +177,39 @@ export function ProgressBar({ value }: { value: number }) {
   );
 }
 
+// ---- Sayı kartı (KPI) ----
+export function Stat({ label, value }: { label: ReactNode; value: number }) {
+  return (
+    <Card className="p-4">
+      <div className="text-3xl font-bold tabular-nums">{value}</div>
+      <div className="mt-0.5 text-xs text-[var(--color-hint)]">{label}</div>
+    </Card>
+  );
+}
+
+// ---- Çubuk satırı (etiket + sayı + oran çubuğu) ----
+export function BarRow({
+  label,
+  count,
+  value,
+}: {
+  label: ReactNode;
+  count: number;
+  value: number;
+}) {
+  return (
+    <li className="flex flex-col gap-1.5">
+      <div className="flex items-baseline justify-between gap-3 text-sm">
+        <span className="truncate font-medium">{label}</span>
+        <span className="shrink-0 tabular-nums text-[var(--color-hint)]">
+          {count}
+        </span>
+      </div>
+      <ProgressBar value={value} />
+    </li>
+  );
+}
+
 // ---- Boş durum ----
 export function EmptyState({
   icon,

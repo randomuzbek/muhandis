@@ -42,12 +42,26 @@ export async function searchProfiles(
 
   if (filters.q) {
     const like = `%${filters.q}%`;
+    // Serbest metin profil alanlarının yanında yetenek/ilgi etiketlerini de tarar.
+    const skillSub = db
+      .select({ uid: profileSkills.userId })
+      .from(profileSkills)
+      .innerJoin(skills, eq(profileSkills.skillId, skills.id))
+      .where(ilike(skills.name, like));
+    const interestSub = db
+      .select({ uid: profileInterests.userId })
+      .from(profileInterests)
+      .innerJoin(interests, eq(profileInterests.interestId, interests.id))
+      .where(ilike(interests.name, like));
     conditions.push(
       or(
         ilike(profiles.displayName, like),
         ilike(profiles.headline, like),
         ilike(profiles.company, like),
         ilike(profiles.city, like),
+        ilike(profiles.currentRole, like),
+        inArray(profiles.userId, skillSub),
+        inArray(profiles.userId, interestSub),
       ),
     );
   }

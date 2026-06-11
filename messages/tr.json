@@ -5,6 +5,7 @@
   "nav": {
     "home": "Ana sayfa",
     "directory": "Dizin",
+    "stats": "İstatistik",
     "feed": "Akış",
     "profile": "Profil",
     "editProfile": "Profili düzenle",
@@ -21,17 +22,17 @@
         "title": "Mühendis dizini",
         "desc": "Kim hangi alanda, nerede ve ne üzerine çalışıyor görün."
       },
-      "qa": {
-        "title": "Soru & cevap",
-        "desc": "Teknik ve kariyer sorularınıza topluluktan cevap alın."
-      },
-      "projects": {
-        "title": "Proje panosu",
-        "desc": "Projeniz için doğru mühendisi bulun."
+      "stats": {
+        "title": "Topluluk haritası",
+        "desc": "Kaç mühendis, hangi ülkelerde ve hangi alanlarda — canlı istatistik."
       },
       "mentorship": {
         "title": "Mentorluk",
         "desc": "Yurtdışında okumuş veya çalışmış mühendislerden yol alın."
+      },
+      "community": {
+        "title": "Canlı sohbet Telegram'da",
+        "desc": "Sohbet, soru-cevap ve tanışma Telegram grubumuzda sürer."
       }
     }
   },
@@ -142,7 +143,7 @@
   },
   "directory": {
     "title": "Mühendis dizini",
-    "searchPlaceholder": "İsim, pozisyon veya kuruma göre ara",
+    "searchPlaceholder": "İsim, pozisyon, kurum veya yeteneğe göre ara",
     "allFields": "Tüm alanlar",
     "countryPlaceholder": "Ülke",
     "mentoring": "Mentorluk",
@@ -150,6 +151,21 @@
     "apply": "Uygula",
     "results": "{count, plural, =0 {Sonuç yok} other {# mühendis}}",
     "empty": "Mühendis bulunamadı."
+  },
+  "stats": {
+    "title": "Topluluk haritası",
+    "subtitle": "Özbek mühendisler topluluğu rakamlarla — kim nerede, hangi alanda.",
+    "byField": "Alana göre",
+    "byCountry": "Ülkeye göre",
+    "empty": "Henüz veri yok",
+    "cta": "Size uygun mühendisi dizinden bulun.",
+    "openDirectory": "Dizini aç",
+    "kpi": {
+      "members": "Üyeler",
+      "countries": "Ülkeler",
+      "mentoring": "Mentorluğa açık",
+      "collaborators": "İş birliği arayan"
+    }
   },
   "feed": {
     "title": "Akış",

@@ -5,6 +5,7 @@
   "nav": {
     "home": "Home",
     "directory": "Directory",
+    "stats": "Stats",
     "feed": "Feed",
     "profile": "Profile",
     "editProfile": "Edit profile",
@@ -21,17 +22,17 @@
         "title": "Engineer directory",
         "desc": "See who works in which field, where, and on what."
       },
-      "qa": {
-        "title": "Questions & answers",
-        "desc": "Get answers to technical and career questions from the community."
-      },
-      "projects": {
-        "title": "Project board",
-        "desc": "Find the right engineer for your project."
+      "stats": {
+        "title": "Community map",
+        "desc": "How many engineers, in which countries and fields — live statistics."
       },
       "mentorship": {
         "title": "Mentorship",
         "desc": "Get guidance from engineers who studied or worked abroad."
+      },
+      "community": {
+        "title": "Live chat on Telegram",
+        "desc": "Conversations, Q&A and introductions happen in our Telegram group."
       }
     }
   },
@@ -142,7 +143,7 @@
   },
   "directory": {
     "title": "Engineer directory",
-    "searchPlaceholder": "Search by name, role or company",
+    "searchPlaceholder": "Search by name, role, company or skill",
     "allFields": "All fields",
     "countryPlaceholder": "Country",
     "mentoring": "Mentoring",
@@ -150,6 +151,21 @@
     "apply": "Apply",
     "results": "{count, plural, =0 {No results} one {# engineer} other {# engineers}}",
     "empty": "No engineers found."
+  },
+  "stats": {
+    "title": "Community map",
+    "subtitle": "The Uzbek engineering community in numbers — who is where, in which field.",
+    "byField": "By field",
+    "byCountry": "By country",
+    "empty": "No data yet",
+    "cta": "Find the right engineer for you in the directory.",
+    "openDirectory": "Open the directory",
+    "kpi": {
+      "members": "Members",
+      "countries": "Countries",
+      "mentoring": "Open to mentoring",
+      "collaborators": "Seeking collaborators"
+    }
   },
   "feed": {
     "title": "Feed",

@@ -1,17 +1,19 @@
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
+import { Link } from "@/i18n/navigation";
 import { Card, buttonClass } from "@/components/ui/kit";
 
 const TELEGRAM_COMMUNITY_URL =
   process.env.NEXT_PUBLIC_TELEGRAM_COMMUNITY_URL ?? "https://t.me/";
 const MINI_APP_URL = process.env.NEXT_PUBLIC_MINI_APP_URL ?? "https://t.me/";
 
+// Sohbet Telegram grubunda yaşar; uygulamanın kimliği dizin + topluluk haritası.
 const FEATURES = [
-  { key: "directory", icon: "🧭" },
-  { key: "qa", icon: "💬" },
-  { key: "projects", icon: "🚀" },
-  { key: "mentorship", icon: "🤝" },
+  { key: "directory", icon: "🧭", href: "/directory" },
+  { key: "stats", icon: "📊", href: "/stats" },
+  { key: "mentorship", icon: "🤝", href: "/directory" },
+  { key: "community", icon: "💬", href: null },
 ] as const;
 
 export default function HomePage({
@@ -51,22 +53,33 @@ export default function HomePage({
 
       {/* Features */}
       <section className="grid w-full gap-4 sm:grid-cols-2">
-        {FEATURES.map(({ key, icon }) => (
-          <Card key={key} className="flex flex-col gap-2 p-6">
-            <span
-              className="grid size-11 place-items-center rounded-[var(--radius-field)] bg-[var(--color-secondary)] text-2xl"
-              aria-hidden
-            >
-              {icon}
-            </span>
-            <h2 className="text-lg font-semibold">
-              {t(`features.${key}.title`)}
-            </h2>
-            <p className="text-sm text-[var(--color-hint)]">
-              {t(`features.${key}.desc`)}
-            </p>
-          </Card>
-        ))}
+        {FEATURES.map(({ key, icon, href }) => {
+          const body = (
+            <Card className="flex h-full flex-col gap-2 p-6 transition hover:bg-[var(--color-secondary)]/40">
+              <span
+                className="grid size-11 place-items-center rounded-[var(--radius-field)] bg-[var(--color-secondary)] text-2xl"
+                aria-hidden
+              >
+                {icon}
+              </span>
+              <h2 className="text-lg font-semibold">
+                {t(`features.${key}.title`)}
+              </h2>
+              <p className="text-sm text-[var(--color-hint)]">
+                {t(`features.${key}.desc`)}
+              </p>
+            </Card>
+          );
+          return href ? (
+            <Link key={key} href={href}>
+              {body}
+            </Link>
+          ) : (
+            <a key={key} href={TELEGRAM_COMMUNITY_URL}>
+              {body}
+            </a>
+          );
+        })}
       </section>
     </main>
   );

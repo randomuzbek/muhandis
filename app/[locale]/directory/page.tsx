@@ -1,7 +1,11 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { searchProfiles } from "@/lib/queries/directory";
+import { getFieldCounts } from "@/lib/queries/stats";
 import { ENGINEERING_FIELDS, labelFor } from "@/lib/data/taxonomy";
 import { DirectorySearch } from "@/components/directory/DirectorySearch";
+
+// Başlangıç sonuçları ve alan sayaçları deploy'a kilitlenmesin; 5 dk'da bir tazelenir.
+export const revalidate = 300;
 
 export default async function DirectoryPage({
   params,
@@ -11,14 +15,17 @@ export default async function DirectoryPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [initialResults, t] = await Promise.all([
+  const [initialResults, fieldCounts, t] = await Promise.all([
     searchProfiles({}),
+    getFieldCounts(),
     getTranslations("directory"),
   ]);
 
+  const countBySlug = new Map(fieldCounts.map((f) => [f.slug, f.count]));
   const fieldOptions = ENGINEERING_FIELDS.map((f) => ({
     slug: f.slug,
     label: labelFor(f.labels, locale),
+    count: countBySlug.get(f.slug) ?? 0,
   }));
 
   return (

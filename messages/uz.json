@@ -5,6 +5,7 @@
   "nav": {
     "home": "Bosh sahifa",
     "directory": "Katalog",
+    "stats": "Statistika",
     "feed": "Lenta",
     "profile": "Profil",
     "editProfile": "Profilni tahrirlash",
@@ -21,17 +22,17 @@
         "title": "Muhandislar katalogi",
         "desc": "Kim qaysi sohada, qayerda va nima ustida ishlayotganini ko'ring."
       },
-      "qa": {
-        "title": "Savol-javob",
-        "desc": "Texnik va karyera savollaringizga jamoadan javob oling."
-      },
-      "projects": {
-        "title": "Loyiha e'lonlari",
-        "desc": "Loyihangiz uchun kerakli muhandisni toping."
+      "stats": {
+        "title": "Hamjamiyat xaritasi",
+        "desc": "Nechta muhandis, qaysi davlatlarda va qaysi sohalarda — jonli statistika."
       },
       "mentorship": {
         "title": "Mentorlik",
         "desc": "Chet elda o'qigan yoki ishlagan muhandislardan yo'l-yo'riq oling."
+      },
+      "community": {
+        "title": "Jonli muloqot Telegramda",
+        "desc": "Suhbat, savol-javob va tanishuv Telegram guruhimizda davom etadi."
       }
     }
   },
@@ -142,7 +143,7 @@
   },
   "directory": {
     "title": "Muhandislar katalogi",
-    "searchPlaceholder": "Ism, lavozim yoki tashkilot bo'yicha qidirish",
+    "searchPlaceholder": "Ism, lavozim, tashkilot yoki ko'nikma bo'yicha qidirish",
     "allFields": "Barcha sohalar",
     "countryPlaceholder": "Davlat",
     "mentoring": "Mentorlik",
@@ -150,6 +151,21 @@
     "apply": "Qo'llash",
     "results": "{count, plural, =0 {Natija yo'q} other {# muhandis}}",
     "empty": "Hech kim topilmadi."
+  },
+  "stats": {
+    "title": "Hamjamiyat xaritasi",
+    "subtitle": "O'zbek muhandislari hamjamiyati raqamlarda — kim qayerda va qaysi sohada.",
+    "byField": "Soha bo'yicha",
+    "byCountry": "Davlat bo'yicha",
+    "empty": "Hozircha ma'lumot yo'q",
+    "cta": "O'zingizga mos muhandisni katalogdan toping.",
+    "openDirectory": "Katalogni ochish",
+    "kpi": {
+      "members": "A'zolar",
+      "countries": "Davlatlar",
+      "mentoring": "Mentorlikka ochiq",
+      "collaborators": "Hamkor izlayotganlar"
+    }
   },
   "feed": {
     "title": "Lenta",

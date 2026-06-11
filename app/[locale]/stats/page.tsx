@@ -1,19 +1,21 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { getSessionUser } from "@/lib/auth/session";
-import { isAdmin } from "@/lib/auth/isAdmin";
-import { getAdminStats } from "@/lib/queries/stats";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getPublicStats } from "@/lib/queries/stats";
 import { ENGINEERING_FIELDS, labelFor } from "@/lib/data/taxonomy";
 import { countryName } from "@/lib/data/places";
+import { Link } from "@/i18n/navigation";
 import {
   BarRow,
   Card,
   SectionHeader,
   EmptyState,
   Stat,
+  buttonClass,
 } from "@/components/ui/kit";
 
-export default async function AdminPage({
+// Topluluk haritası herkese açık; sayılar 5 dakikada bir tazelenir.
+export const revalidate = 300;
+
+export default async function StatsPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -21,11 +23,10 @@ export default async function AdminPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const user = await getSessionUser();
-  if (!(await isAdmin(user?.id))) notFound();
-
-  const stats = await getAdminStats();
-  const t = await getTranslations("admin");
+  const [stats, t] = await Promise.all([
+    getPublicStats(),
+    getTranslations("stats"),
+  ]);
 
   const fieldLabel = (slug: string) => {
     const f = ENGINEERING_FIELDS.find((x) => x.slug === slug);
@@ -42,11 +43,9 @@ export default async function AdminPage({
         <p className="mt-1 text-sm text-[var(--color-hint)]">{t("subtitle")}</p>
       </header>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        <Stat label={t("kpi.users")} value={stats.totalUsers} />
-        <Stat label={t("kpi.profiles")} value={stats.totalProfiles} />
-        <Stat label={t("kpi.posts")} value={stats.totalPosts} />
-        <Stat label={t("kpi.comments")} value={stats.totalComments} />
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Stat label={t("kpi.members")} value={stats.totalUsers} />
+        <Stat label={t("kpi.countries")} value={stats.countryCount} />
         <Stat label={t("kpi.mentoring")} value={stats.mentoringCount} />
         <Stat label={t("kpi.collaborators")} value={stats.collaboratorsCount} />
       </div>
@@ -86,6 +85,13 @@ export default async function AdminPage({
           </ul>
         )}
       </Card>
+
+      <div className="mt-8 flex flex-col items-center gap-3 text-center">
+        <p className="text-sm text-[var(--color-hint)]">{t("cta")}</p>
+        <Link href="/directory" className={buttonClass("primary")}>
+          {t("openDirectory")}
+        </Link>
+      </div>
     </main>
   );
 }
