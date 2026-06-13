@@ -49,6 +49,22 @@
       "comments": "Yorumlar",
       "mentoring": "Mentorluğa açık",
       "collaborators": "İş birliği arayan"
+    },
+    "spotlight": {
+      "title": "Haftanın mühendisi",
+      "subtitle": "Ana sayfada bir mühendisi öne çıkar. En yenisi gösterilir.",
+      "pickEngineer": "Mühendis",
+      "blurb": "Tanıtım",
+      "blurbPlaceholder": "Onu tanıtan bir-iki cümle",
+      "quote": "Alıntı",
+      "quotePlaceholder": "En çarpıcı sözü",
+      "publish": "Yayınla",
+      "publishing": "Yayınlanıyor...",
+      "published": "Yayınlandı ✓",
+      "error": "Bir şeyler ters gitti.",
+      "empty": "Henüz spotlight yok",
+      "delete": "Kaldır",
+      "confirmDelete": "Bu spotlight kaldırılsın mı?"
     }
   },
   "profile": {
@@ -236,6 +252,10 @@
     "privacy": "Gizlilik",
     "source": "Kaynak kod",
     "community": "Topluluk"
+  },
+  "spotlight": {
+    "label": "Haftanın mühendisi",
+    "viewProfile": "Profili gör"
   },
   "auth": {
     "signInTitle": "Giriş",

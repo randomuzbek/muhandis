@@ -49,6 +49,22 @@
       "comments": "Izohlar",
       "mentoring": "Mentorlikka ochiq",
       "collaborators": "Hamkor izlayotganlar"
+    },
+    "spotlight": {
+      "title": "Haftaning muhandisi",
+      "subtitle": "Bosh sahifada bir muhandisni ajratib ko'rsating. Eng yangisi chiqadi.",
+      "pickEngineer": "Muhandis",
+      "blurb": "Tanishtiruv",
+      "blurbPlaceholder": "Uni tanishtiradigan bir-ikki gap",
+      "quote": "Iqtibos",
+      "quotePlaceholder": "Eng ta'sirli gapi",
+      "publish": "E'lon qilish",
+      "publishing": "E'lon qilinmoqda...",
+      "published": "E'lon qilindi ✓",
+      "error": "Xatolik yuz berdi.",
+      "empty": "Hozircha spotlight yo'q",
+      "delete": "O'chirish",
+      "confirmDelete": "Bu spotlight o'chirilsinmi?"
     }
   },
   "profile": {
@@ -236,6 +252,10 @@
     "privacy": "Maxfiylik",
     "source": "Manba kodi",
     "community": "Hamjamiyat"
+  },
+  "spotlight": {
+    "label": "Haftaning muhandisi",
+    "viewProfile": "Profilni ko'rish"
   },
   "auth": {
     "signInTitle": "Kirish",

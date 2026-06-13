@@ -49,6 +49,22 @@
       "comments": "Comments",
       "mentoring": "Open to mentoring",
       "collaborators": "Seeking collaborators"
+    },
+    "spotlight": {
+      "title": "Engineer of the week",
+      "subtitle": "Feature an engineer on the home page. The newest one is shown.",
+      "pickEngineer": "Engineer",
+      "blurb": "Intro",
+      "blurbPlaceholder": "One or two sentences introducing them",
+      "quote": "Quote",
+      "quotePlaceholder": "Their most striking line",
+      "publish": "Publish",
+      "publishing": "Publishing...",
+      "published": "Published ✓",
+      "error": "Something went wrong.",
+      "empty": "No spotlights yet",
+      "delete": "Remove",
+      "confirmDelete": "Remove this spotlight?"
     }
   },
   "profile": {
@@ -236,6 +252,10 @@
     "privacy": "Privacy",
     "source": "Source code",
     "community": "Community"
+  },
+  "spotlight": {
+    "label": "Engineer of the week",
+    "viewProfile": "View profile"
   },
   "auth": {
     "signInTitle": "Sign in",

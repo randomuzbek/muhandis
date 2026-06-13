@@ -3,10 +3,15 @@ import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { Link } from "@/i18n/navigation";
 import { Card, buttonClass } from "@/components/ui/kit";
+import { SpotlightCard } from "@/components/home/SpotlightCard";
 
 const TELEGRAM_COMMUNITY_URL =
   process.env.NEXT_PUBLIC_TELEGRAM_COMMUNITY_URL ?? "https://t.me/";
 const MINI_APP_URL = process.env.NEXT_PUBLIC_MINI_APP_URL ?? "https://t.me/";
+
+// Spotlight kartı taze kalsın ama her isteğe DB sorgusu olmasın; yeni spotlight
+// yayınlanınca createSpotlight revalidatePath ile bunu anında tazeler.
+export const revalidate = 300;
 
 // Sohbet Telegram grubunda yaşar; uygulamanın kimliği dizin + topluluk haritası.
 const FEATURES = [
@@ -50,6 +55,9 @@ export default function HomePage({
           </a>
         </div>
       </header>
+
+      {/* Haftaning muhandisi — küratörlü öne çıkan mühendis (varsa) */}
+      <SpotlightCard locale={locale} />
 
       {/* Features */}
       <section className="grid w-full gap-4 sm:grid-cols-2">

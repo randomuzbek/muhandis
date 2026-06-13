@@ -3,6 +3,10 @@ import { notFound } from "next/navigation";
 import { getSessionUser } from "@/lib/auth/session";
 import { isAdmin } from "@/lib/auth/isAdmin";
 import { getAdminStats } from "@/lib/queries/stats";
+import {
+  listProfilesForPicker,
+  listSpotlights,
+} from "@/lib/queries/spotlight";
 import { ENGINEERING_FIELDS, labelFor } from "@/lib/data/taxonomy";
 import { countryName } from "@/lib/data/places";
 import {
@@ -12,6 +16,7 @@ import {
   EmptyState,
   Stat,
 } from "@/components/ui/kit";
+import { SpotlightAdmin } from "@/components/admin/SpotlightAdmin";
 
 export default async function AdminPage({
   params,
@@ -24,7 +29,11 @@ export default async function AdminPage({
   const user = await getSessionUser();
   if (!(await isAdmin(user?.id))) notFound();
 
-  const stats = await getAdminStats();
+  const [stats, pickerProfiles, recentSpotlights] = await Promise.all([
+    getAdminStats(),
+    listProfilesForPicker(),
+    listSpotlights(),
+  ]);
   const t = await getTranslations("admin");
 
   const fieldLabel = (slug: string) => {
@@ -50,6 +59,12 @@ export default async function AdminPage({
         <Stat label={t("kpi.mentoring")} value={stats.mentoringCount} />
         <Stat label={t("kpi.collaborators")} value={stats.collaboratorsCount} />
       </div>
+
+      <SectionHeader>{t("spotlight.title")}</SectionHeader>
+      <p className="px-1 pb-3 text-sm text-[var(--color-hint)]">
+        {t("spotlight.subtitle")}
+      </p>
+      <SpotlightAdmin profiles={pickerProfiles} recent={recentSpotlights} />
 
       <SectionHeader>{t("byField")}</SectionHeader>
       <Card className="p-4">

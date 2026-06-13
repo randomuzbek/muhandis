@@ -279,6 +279,25 @@ export const reports = pgTable(
   (t) => [index("reports_created_idx").on(t.createdAt)],
 );
 
+// "Haftaning muhandisi" — küratörlü öne çıkan mühendis. Admin seçer; en yeni
+// kayıt landing'de gösterilir. Telegram'da yapılamayan, app'e özel içerik döngüsü.
+export const spotlights = pgTable(
+  "spotlights",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    // En çarpıcı alıntı (röportajdan) ve 1-2 cümlelik tanıtım — ikisi de opsiyonel.
+    quote: text("quote"),
+    blurb: text("blurb"),
+    publishedAt: timestamp("published_at", { mode: "date" })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("spotlights_published_idx").on(t.publishedAt)],
+);
+
 // ---------------------------------------------------------------------------
 // İlişkiler (Drizzle relational queries için)
 // ---------------------------------------------------------------------------
@@ -313,3 +332,4 @@ export const commentsRelations = relations(comments, ({ one }) => ({
 export type User = typeof users.$inferSelect;
 export type Profile = typeof profiles.$inferSelect;
 export type Post = typeof posts.$inferSelect;
+export type Spotlight = typeof spotlights.$inferSelect;
