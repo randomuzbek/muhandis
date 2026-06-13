@@ -150,13 +150,16 @@
     "collaborators": "Hamkorlik",
     "apply": "Qo'llash",
     "results": "{count, plural, =0 {Natija yo'q} other {# muhandis}}",
-    "empty": "Hech kim topilmadi."
+    "empty": "Hech kim topilmadi.",
+    "emptyFilteredHint": "Filtrlarni kengaytiring yoki ba'zilarini olib tashlang.",
+    "clearFilters": "Filtrlarni tozalash"
   },
   "stats": {
     "title": "Hamjamiyat xaritasi",
     "subtitle": "O'zbek muhandislari hamjamiyati raqamlarda — kim qayerda va qaysi sohada.",
     "byField": "Soha bo'yicha",
     "byCountry": "Davlat bo'yicha",
+    "tapHint": "Bu muhandislarni katalogda ko'rish uchun ustunni bosing.",
     "empty": "Hozircha ma'lumot yo'q",
     "cta": "O'zingizga mos muhandisni katalogdan toping.",
     "openDirectory": "Katalogni ochish",

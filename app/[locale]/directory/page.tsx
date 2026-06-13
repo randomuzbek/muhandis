@@ -1,22 +1,37 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { searchProfiles } from "@/lib/queries/directory";
+import { searchProfiles, type DirectoryFilters } from "@/lib/queries/directory";
 import { getFieldCounts } from "@/lib/queries/stats";
 import { ENGINEERING_FIELDS, labelFor } from "@/lib/data/taxonomy";
 import { DirectorySearch } from "@/components/directory/DirectorySearch";
 
-// Başlangıç sonuçları ve alan sayaçları deploy'a kilitlenmesin; 5 dk'da bir tazelenir.
-export const revalidate = 300;
+// İstatistik sayfasından gelen ?field=/?country= gibi paylaşılabilir derin
+// bağlantıları sunucuda okuyabilmek için sayfa istek-anında render edilir.
+function param(value: string | string[] | undefined): string | undefined {
+  const v = Array.isArray(value) ? value[0] : value;
+  return v && v.trim() ? v.trim() : undefined;
+}
 
 export default async function DirectoryPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { locale } = await params;
+  const sp = await searchParams;
   setRequestLocale(locale);
 
+  const initialFilters: DirectoryFilters = {
+    q: param(sp.q),
+    field: param(sp.field),
+    country: param(sp.country),
+    mentoring: sp.mentoring === "1" || undefined,
+    collaborators: sp.collaborators === "1" || undefined,
+  };
+
   const [initialResults, fieldCounts, t] = await Promise.all([
-    searchProfiles({}),
+    searchProfiles(initialFilters),
     getFieldCounts(),
     getTranslations("directory"),
   ]);
@@ -33,6 +48,7 @@ export default async function DirectoryPage({
       <h1 className="mb-4 text-2xl font-bold">{t("title")}</h1>
       <DirectorySearch
         initialResults={initialResults}
+        initialFilters={initialFilters}
         locale={locale}
         fieldOptions={fieldOptions}
       />

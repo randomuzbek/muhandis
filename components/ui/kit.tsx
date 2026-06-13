@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "@/i18n/navigation";
 
 // Basit className birleştirici
 export function cn(...parts: (string | false | null | undefined)[]): string {
@@ -188,17 +189,20 @@ export function Stat({ label, value }: { label: ReactNode; value: number }) {
 }
 
 // ---- Çubuk satırı (etiket + sayı + oran çubuğu) ----
+// href verilirse satır tıklanabilir olur (ör. istatistik → filtrelenmiş dizin).
 export function BarRow({
   label,
   count,
   value,
+  href,
 }: {
   label: ReactNode;
   count: number;
   value: number;
+  href?: string;
 }) {
-  return (
-    <li className="flex flex-col gap-1.5">
+  const inner = (
+    <>
       <div className="flex items-baseline justify-between gap-3 text-sm">
         <span className="truncate font-medium">{label}</span>
         <span className="shrink-0 tabular-nums text-[var(--color-hint)]">
@@ -206,8 +210,21 @@ export function BarRow({
         </span>
       </div>
       <ProgressBar value={value} />
-    </li>
+    </>
   );
+  if (href) {
+    return (
+      <li>
+        <Link
+          href={href}
+          className="-mx-2 flex flex-col gap-1.5 rounded-[var(--radius-field)] px-2 py-1 transition hover:bg-[var(--color-secondary)]"
+        >
+          {inner}
+        </Link>
+      </li>
+    );
+  }
+  return <li className="flex flex-col gap-1.5">{inner}</li>;
 }
 
 // ---- Boş durum ----

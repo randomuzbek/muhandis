@@ -12,9 +12,13 @@ import { Link } from "@/i18n/navigation";
 import { countryName } from "@/lib/data/places";
 import { CountrySelect } from "@/components/ui/PlaceFields";
 import { searchProfilesAction } from "@/lib/actions/directory";
-import type { DirectoryCard } from "@/lib/queries/directory";
+import type {
+  DirectoryCard,
+  DirectoryFilters,
+} from "@/lib/queries/directory";
 import {
   Avatar,
+  buttonClass,
   Card,
   Chip,
   EmptyState,
@@ -27,24 +31,33 @@ type FieldOption = { slug: string; label: string; count: number };
 
 export function DirectorySearch({
   initialResults,
+  initialFilters,
   locale,
   fieldOptions,
 }: {
   initialResults: DirectoryCard[];
+  initialFilters: DirectoryFilters;
   locale: string;
   fieldOptions: FieldOption[];
 }) {
   const t = useTranslations("directory");
   const pt = useTranslations("profile");
 
-  const [q, setQ] = useState("");
-  const [field, setField] = useState("");
-  const [country, setCountry] = useState("");
-  const [mentoring, setMentoring] = useState(false);
-  const [collaborators, setCollaborators] = useState(false);
+  // Başlangıç durumu sunucudan (URL) gelir → SSR ile birebir, hidrasyon uyumlu.
+  const [q, setQ] = useState(initialFilters.q ?? "");
+  const [field, setField] = useState(initialFilters.field ?? "");
+  const [country, setCountry] = useState(initialFilters.country ?? "");
+  const [mentoring, setMentoring] = useState(initialFilters.mentoring ?? false);
+  const [collaborators, setCollaborators] = useState(
+    initialFilters.collaborators ?? false,
+  );
 
   const [results, setResults] = useState<DirectoryCard[]>(initialResults);
   const [isPending, startTransition] = useTransition();
+
+  const hasActiveFilters = Boolean(
+    q.trim() || field || country || mentoring || collaborators,
+  );
 
   // İlk render'da gelen sonuçları tekrar sorgulamamak için atla.
   const didMount = useRef(false);
@@ -55,13 +68,37 @@ export function DirectorySearch({
     [fieldOptions],
   );
 
+  const clearFilters = useCallback(() => {
+    setQ("");
+    setField("");
+    setCountry("");
+    setMentoring(false);
+    setCollaborators(false);
+  }, []);
+
   useEffect(() => {
+    // İlk render'da server'dan gelen initialResults zaten initialFilters'ı
+    // yansıtıyor; tekrar sorgulama.
     if (!didMount.current) {
       didMount.current = true;
       return;
     }
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
+      // Filtreleri paylaşılabilir tutmak için URL'i senkronla (sayfa yenilemeden).
+      const sp = new URLSearchParams();
+      if (q.trim()) sp.set("q", q.trim());
+      if (field) sp.set("field", field);
+      if (country) sp.set("country", country);
+      if (mentoring) sp.set("mentoring", "1");
+      if (collaborators) sp.set("collaborators", "1");
+      const qs = sp.toString();
+      window.history.replaceState(
+        null,
+        "",
+        qs ? `${window.location.pathname}?${qs}` : window.location.pathname,
+      );
+
       startTransition(async () => {
         const next = await searchProfilesAction({
           q: q.trim() || undefined,
@@ -160,7 +197,22 @@ export function DirectorySearch({
         </Card>
       ) : results.length === 0 ? (
         <Card>
-          <EmptyState icon="🔍" title={t("empty")} />
+          <EmptyState
+            icon="🔍"
+            title={t("empty")}
+            hint={hasActiveFilters ? t("emptyFilteredHint") : undefined}
+            action={
+              hasActiveFilters ? (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className={buttonClass("secondary")}
+                >
+                  {t("clearFilters")}
+                </button>
+              ) : undefined
+            }
+          />
         </Card>
       ) : (
         <Card className="divide-y divide-[var(--color-separator)]">

@@ -41,6 +41,9 @@ export default async function StatsPage({
       <header className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
         <p className="mt-1 text-sm text-[var(--color-hint)]">{t("subtitle")}</p>
+        {(stats.byField.length > 0 || stats.byCountry.length > 0) && (
+          <p className="mt-2 text-xs text-[var(--color-hint)]">{t("tapHint")}</p>
+        )}
       </header>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -62,6 +65,7 @@ export default async function StatsPage({
                 label={fieldLabel(f.slug)}
                 count={f.count}
                 value={f.count / maxField}
+                href={`/directory?field=${f.slug}`}
               />
             ))}
           </ul>
@@ -80,6 +84,7 @@ export default async function StatsPage({
                 label={countryName(c.country, locale) || c.country}
                 count={c.count}
                 value={c.count / maxCountry}
+                href={`/directory?country=${c.country}`}
               />
             ))}
           </ul>
