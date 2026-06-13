@@ -53,11 +53,30 @@ export async function ProfileView({
     .filter(Boolean)
     .join(" · ");
 
-  const fieldLabels = fieldSlugs
-    .map((slug) => ENGINEERING_FIELDS.find((f) => f.slug === slug))
-    .filter(Boolean)
-    .map((f) => labelFor(f!.labels, locale));
-  const allFieldChips = [...fieldLabels, ...(profile.customFields ?? [])];
+  // Alan/yetenek/ilgi etiketleri dizine derin bağlanır → "buna benzer
+  // mühendisleri bul". Tanımlı alanlar slug ile, geri kalanı serbest aramayla.
+  const fieldChips = [
+    ...fieldSlugs
+      .map((slug) => {
+        const f = ENGINEERING_FIELDS.find((x) => x.slug === slug);
+        return f
+          ? { label: labelFor(f.labels, locale), href: `/directory?field=${slug}` }
+          : null;
+      })
+      .filter((x): x is { label: string; href: string } => x !== null),
+    ...(profile.customFields ?? []).map((c) => ({
+      label: c,
+      href: `/directory?q=${encodeURIComponent(c)}`,
+    })),
+  ];
+  const skillChips = skills.map((s) => ({
+    label: s,
+    href: `/directory?q=${encodeURIComponent(s)}`,
+  }));
+  const interestChips = interests.map((i) => ({
+    label: i,
+    href: `/directory?q=${encodeURIComponent(i)}`,
+  }));
 
   const links = (profile.links ?? {}) as Record<string, string>;
   const linkEntries = Object.entries(links).filter(([, v]) => v);
@@ -168,19 +187,19 @@ export async function ProfileView({
         </div>
       )}
 
-      {allFieldChips.length > 0 && (
+      {fieldChips.length > 0 && (
         <Section title={t("fields")}>
-          <ChipWrap items={allFieldChips} />
+          <ChipLinks items={fieldChips} />
         </Section>
       )}
-      {skills.length > 0 && (
+      {skillChips.length > 0 && (
         <Section title={t("skills")}>
-          <ChipWrap items={skills} />
+          <ChipLinks items={skillChips} />
         </Section>
       )}
-      {interests.length > 0 && (
+      {interestChips.length > 0 && (
         <Section title={t("interests")}>
-          <ChipWrap items={interests} />
+          <ChipLinks items={interestChips} />
         </Section>
       )}
       {profile.bio && (
@@ -210,6 +229,15 @@ export async function ProfileView({
           </Card>
         </Section>
       )}
+
+      {/* Keşfi sürdür: spotlight linkiyle gelen ziyaretçiyi dizine yönlendir */}
+      {variant === "public" && (
+        <div className="mt-8 flex justify-center">
+          <Link href="/directory" className={buttonClass("secondary")}>
+            {t("discoverMore")}
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
@@ -235,11 +263,17 @@ function Section({
   );
 }
 
-function ChipWrap({ items }: { items: string[] }) {
+function ChipLinks({ items }: { items: { label: string; href: string }[] }) {
   return (
     <div className="flex flex-wrap gap-2">
-      {items.map((i) => (
-        <Chip key={i}>{i}</Chip>
+      {items.map((it) => (
+        <Link
+          key={it.href + it.label}
+          href={it.href}
+          className="transition hover:opacity-80"
+        >
+          <Chip>{it.label}</Chip>
+        </Link>
       ))}
     </div>
   );
