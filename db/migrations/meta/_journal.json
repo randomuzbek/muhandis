@@ -57,6 +57,13 @@
       "when": 1782731402835,
       "tag": "0007_new_taskmaster",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1782734778376,
+      "tag": "0008_uneven_crystal",
+      "breakpoints": true
     }
   ]
 }

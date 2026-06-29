@@ -341,6 +341,28 @@ export const userRoles = pgTable(
   ],
 );
 
+// Bir sorunun (posts.type='question') hedeflendiği kullanıcı(lar).
+// source: 'asker' (soran belirli kişiye sordu) | 'admin' (kurucu elle yönlendirdi).
+// Herkese açık sorularda hiç satır olmaz.
+export const questionTargets = pgTable(
+  "question_targets",
+  {
+    id: serial("id").primaryKey(),
+    postId: integer("post_id")
+      .notNull()
+      .references(() => posts.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    source: text("source").notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (t) => [
+    unique("question_targets_unique").on(t.postId, t.userId),
+    index("question_targets_user_idx").on(t.userId),
+  ],
+);
+
 // ---------------------------------------------------------------------------
 // İlişkiler (Drizzle relational queries için)
 // ---------------------------------------------------------------------------
@@ -378,3 +400,4 @@ export type Post = typeof posts.$inferSelect;
 export type Spotlight = typeof spotlights.$inferSelect;
 export type Role = typeof roles.$inferSelect;
 export type UserRole = typeof userRoles.$inferSelect;
+export type QuestionTarget = typeof questionTargets.$inferSelect;
