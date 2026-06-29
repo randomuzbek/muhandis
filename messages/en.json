@@ -42,6 +42,16 @@
     "byField": "By field",
     "byCountry": "By country",
     "empty": "No data yet",
+    "roles": {
+      "title": "Roles",
+      "assign": "Assign role",
+      "remove": "Remove",
+      "pickUser": "User",
+      "pickRole": "Role",
+      "pickTopic": "Topic (maintainer only)",
+      "current": "Current roles",
+      "empty": "No roles assigned yet"
+    },
     "kpi": {
       "users": "Users",
       "profiles": "Profiles",

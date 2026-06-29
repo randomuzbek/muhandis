@@ -42,6 +42,16 @@
     "byField": "Soha bo'yicha",
     "byCountry": "Davlat bo'yicha",
     "empty": "Hozircha ma'lumot yo'q",
+    "roles": {
+      "title": "Rollar",
+      "assign": "Rol berish",
+      "remove": "Olib tashlash",
+      "pickUser": "Foydalanuvchi",
+      "pickRole": "Rol",
+      "pickTopic": "Mavzu (faqat mas'ul uchun)",
+      "current": "Joriy rollar",
+      "empty": "Hali rol berilmagan"
+    },
     "kpi": {
       "users": "Foydalanuvchilar",
       "profiles": "Profillar",

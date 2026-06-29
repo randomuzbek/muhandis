@@ -42,6 +42,16 @@
     "byField": "Alana göre",
     "byCountry": "Ülkeye göre",
     "empty": "Henüz veri yok",
+    "roles": {
+      "title": "Roller",
+      "assign": "Rol ata",
+      "remove": "Kaldır",
+      "pickUser": "Kullanıcı",
+      "pickRole": "Rol",
+      "pickTopic": "Konu (yalnız konu sorumlusu)",
+      "current": "Mevcut roller",
+      "empty": "Henüz rol atanmadı"
+    },
     "kpi": {
       "users": "Kullanıcılar",
       "profiles": "Profiller",
