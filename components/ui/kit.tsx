@@ -165,6 +165,26 @@ export function Badge({
   );
 }
 
+// ---- Rol rozeti — kategoriye göre ton. mgmt=accent, status=success, community=neutral ----
+export function RoleBadge({
+  labels,
+  category,
+  locale,
+}: {
+  labels: Record<string, string>;
+  category: string;
+  locale: string;
+}) {
+  const tone: "neutral" | "success" | "accent" =
+    category === "mgmt"
+      ? "accent"
+      : category === "status"
+        ? "success"
+        : "neutral";
+  const label = labels[locale] ?? labels.en ?? Object.values(labels)[0] ?? "";
+  return <Badge tone={tone}>{label}</Badge>;
+}
+
 // ---- İlerleme çubuğu (0..1) ----
 export function ProgressBar({ value }: { value: number }) {
   const pct = Math.max(0, Math.min(1, value)) * 100;
