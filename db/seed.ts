@@ -1,7 +1,8 @@
 import "dotenv/config";
 import { db } from "./index";
-import { engineeringFields, topics } from "./schema";
+import { engineeringFields, topics, roles } from "./schema";
 import { ENGINEERING_FIELDS, TOPICS } from "../lib/data/taxonomy";
+import { ROLES } from "../lib/data/roles";
 
 // Taksonomiyi (mühendislik alanları + forum konuları) tabloya yazar.
 // Çalıştırma: npm run db:seed   (DATABASE_URL gerekir)
@@ -23,6 +24,22 @@ async function main() {
       .insert(topics)
       .values({ slug: t.slug, labels: t.labels })
       .onConflictDoUpdate({ target: topics.slug, set: { labels: t.labels } });
+  }
+
+  console.log("Seeding roles...");
+  for (const r of ROLES) {
+    await db
+      .insert(roles)
+      .values({
+        slug: r.slug,
+        labels: r.labels,
+        category: r.category,
+        scope: r.scope,
+      })
+      .onConflictDoUpdate({
+        target: roles.slug,
+        set: { labels: r.labels, category: r.category, scope: r.scope },
+      });
   }
 
   console.log("Seed tamamlandı ✅");

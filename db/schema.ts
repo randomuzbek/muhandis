@@ -8,6 +8,7 @@ import {
   jsonb,
   primaryKey,
   uniqueIndex,
+  unique,
   index,
   serial,
   type AnyPgColumn,
@@ -299,6 +300,48 @@ export const spotlights = pgTable(
 );
 
 // ---------------------------------------------------------------------------
+// Roller & yetkiler — gönüllüyle büyüyen topluluk için.
+// Rol kataloğu lib/data/roles.ts'te; bu tablo db:seed ile doldurulur.
+// ---------------------------------------------------------------------------
+
+export const roles = pgTable("roles", {
+  slug: text("slug").primaryKey(),
+  // Çok dilli etiketler: { uz, en, ru, tr }
+  labels: jsonb("labels").$type<Record<string, string>>().notNull(),
+  // 'mgmt' | 'status' | 'community'
+  category: text("category").notNull(),
+  // 'global' | 'topic'
+  scope: text("scope").notNull().default("global"),
+});
+
+// Bir kullanıcıya verilen rol. topicId yalnız scope='topic' (maintainer) için dolu.
+export const userRoles = pgTable(
+  "user_roles",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    roleSlug: text("role_slug")
+      .notNull()
+      .references(() => roles.slug, { onDelete: "cascade" }),
+    topicId: integer("topic_id").references(() => topics.id, {
+      onDelete: "cascade",
+    }),
+    grantedBy: text("granted_by").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    grantedAt: timestamp("granted_at", { mode: "date" }).notNull().defaultNow(),
+  },
+  (t) => [
+    unique("user_roles_unique")
+      .on(t.userId, t.roleSlug, t.topicId)
+      .nullsNotDistinct(),
+    index("user_roles_user_idx").on(t.userId),
+  ],
+);
+
+// ---------------------------------------------------------------------------
 // İlişkiler (Drizzle relational queries için)
 // ---------------------------------------------------------------------------
 
@@ -333,3 +376,5 @@ export type User = typeof users.$inferSelect;
 export type Profile = typeof profiles.$inferSelect;
 export type Post = typeof posts.$inferSelect;
 export type Spotlight = typeof spotlights.$inferSelect;
+export type Role = typeof roles.$inferSelect;
+export type UserRole = typeof userRoles.$inferSelect;
