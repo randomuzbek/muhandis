@@ -3,11 +3,14 @@
 import { z } from "zod";
 import { eq, and, count, gte } from "drizzle-orm";
 import { db } from "@/db";
-import { posts, comments, reactions, topics } from "@/db/schema";
+import { posts, comments, reactions, topics, questionTargets } from "@/db/schema";
 import { requireUserId } from "@/lib/auth/session";
 import { can } from "@/lib/auth/roles";
 import { RATE_LIMITS, windowStart, exceeds } from "@/lib/auth/rateLimit";
-import { notifyComment } from "@/lib/telegram/notifications";
+import {
+  notifyComment,
+  notifyQuestionTarget,
+} from "@/lib/telegram/notifications";
 import { POST_TYPES } from "@/lib/data/posts";
 
 const createSchema = z.object({
@@ -15,6 +18,7 @@ const createSchema = z.object({
   title: z.string().trim().max(160).optional().or(z.literal("")),
   body: z.string().trim().min(1, "EMPTY").max(8000),
   topicSlug: z.string().trim().optional().or(z.literal("")),
+  targetUserId: z.string().trim().optional().or(z.literal("")),
 });
 
 export type CreatePostInput = z.input<typeof createSchema>;
@@ -70,6 +74,19 @@ export async function createPost(
       topicId,
     })
     .returning({ id: posts.id });
+
+  // "Belirli kişiye" sorulan soru: hedef satırı + bildirim (kendine hariç).
+  if (
+    data.type === "question" &&
+    data.targetUserId &&
+    data.targetUserId !== userId
+  ) {
+    await db
+      .insert(questionTargets)
+      .values({ postId: created.id, userId: data.targetUserId, source: "asker" })
+      .onConflictDoNothing();
+    void notifyQuestionTarget(data.targetUserId, created.id, data.title || null);
+  }
 
   return { ok: true, id: created.id };
 }
