@@ -19,6 +19,8 @@ import {
 import { SpotlightAdmin } from "@/components/admin/SpotlightAdmin";
 import { RolesAdmin } from "@/components/admin/RolesAdmin";
 import { listUserRolesForAdmin } from "@/lib/actions/roles";
+import { listOpenQuestions } from "@/lib/queries/questions";
+import { RouteQuestionAdmin } from "@/components/admin/RouteQuestionAdmin";
 import { db } from "@/db";
 import { topics } from "@/db/schema";
 
@@ -33,14 +35,21 @@ export default async function AdminPage({
   const user = await getSessionUser();
   if (!(await isAdmin(user?.id))) notFound();
 
-  const [stats, pickerProfiles, recentSpotlights, roleAssignments, topicList] =
-    await Promise.all([
-      getAdminStats(),
-      listProfilesForPicker(),
-      listSpotlights(),
-      listUserRolesForAdmin(),
-      db.select().from(topics),
-    ]);
+  const [
+    stats,
+    pickerProfiles,
+    recentSpotlights,
+    roleAssignments,
+    topicList,
+    openQuestions,
+  ] = await Promise.all([
+    getAdminStats(),
+    listProfilesForPicker(),
+    listSpotlights(),
+    listUserRolesForAdmin(),
+    db.select().from(topics),
+    listOpenQuestions(),
+  ]);
   const t = await getTranslations("admin");
 
   const fieldLabel = (slug: string) => {
@@ -79,6 +88,9 @@ export default async function AdminPage({
         topics={topicList}
         assignments={roleAssignments}
       />
+
+      <SectionHeader>{t("route.title")}</SectionHeader>
+      <RouteQuestionAdmin questions={openQuestions} people={pickerProfiles} />
 
       <SectionHeader>{t("byField")}</SectionHeader>
       <Card className="p-4">

@@ -52,6 +52,12 @@
       "current": "Current roles",
       "empty": "No roles assigned yet"
     },
+    "route": {
+      "title": "Route a question",
+      "pickQuestion": "Question",
+      "pickPerson": "Person",
+      "route": "Route"
+    },
     "kpi": {
       "users": "Users",
       "profiles": "Profiles",

@@ -52,6 +52,12 @@
       "current": "Mevcut roller",
       "empty": "Henüz rol atanmadı"
     },
+    "route": {
+      "title": "Soru yönlendir",
+      "pickQuestion": "Soru",
+      "pickPerson": "Kişi",
+      "route": "Yönlendir"
+    },
     "kpi": {
       "users": "Kullanıcılar",
       "profiles": "Profiller",

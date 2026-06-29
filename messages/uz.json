@@ -52,6 +52,12 @@
       "current": "Joriy rollar",
       "empty": "Hali rol berilmagan"
     },
+    "route": {
+      "title": "Savolni yo'naltirish",
+      "pickQuestion": "Savol",
+      "pickPerson": "Kishi",
+      "route": "Yo'naltirish"
+    },
     "kpi": {
       "users": "Foydalanuvchilar",
       "profiles": "Profillar",
