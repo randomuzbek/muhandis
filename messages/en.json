@@ -205,6 +205,12 @@
     "topic": "Topic",
     "noTopic": "No topic",
     "typeLabel": "Type",
+    "audience": {
+      "label": "Audience",
+      "public": "Everyone",
+      "direct": "A specific person",
+      "pickPerson": "Pick a person"
+    },
     "type": {
       "post": "Post",
       "question": "Question",

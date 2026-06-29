@@ -205,6 +205,12 @@
     "topic": "Konu",
     "noTopic": "Konusuz",
     "typeLabel": "Tür",
+    "audience": {
+      "label": "Kime",
+      "public": "Herkese açık",
+      "direct": "Belirli kişiye",
+      "pickPerson": "Kişi seç"
+    },
     "type": {
       "post": "Gönderi",
       "question": "Soru",

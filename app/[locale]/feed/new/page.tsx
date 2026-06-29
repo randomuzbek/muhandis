@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/auth/session";
 import { NewPostForm } from "@/components/feed/NewPostForm";
 import { TOPICS, labelFor } from "@/lib/data/taxonomy";
+import { listProfilesForPicker } from "@/lib/queries/spotlight";
 
 export default async function NewPostPage({
   params,
@@ -20,11 +21,12 @@ export default async function NewPostPage({
     slug: tp.slug,
     label: labelFor(tp.labels, locale),
   }));
+  const people = await listProfilesForPicker();
 
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 sm:px-6">
       <h1 className="mb-5 text-2xl font-bold">{t("newPost")}</h1>
-      <NewPostForm topics={topics} />
+      <NewPostForm topics={topics} people={people} />
     </main>
   );
 }

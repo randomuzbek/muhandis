@@ -205,6 +205,12 @@
     "topic": "Mavzu",
     "noTopic": "Mavzusiz",
     "typeLabel": "Turi",
+    "audience": {
+      "label": "Kimga",
+      "public": "Hammaga ochiq",
+      "direct": "Muayyan shaxsga",
+      "pickPerson": "Kishini tanlang"
+    },
     "type": {
       "post": "Post",
       "question": "Savol",

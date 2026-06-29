@@ -205,6 +205,12 @@
     "topic": "Тема",
     "noTopic": "Без темы",
     "typeLabel": "Тип",
+    "audience": {
+      "label": "Кому",
+      "public": "Всем",
+      "direct": "Конкретному человеку",
+      "pickPerson": "Выберите человека"
+    },
     "type": {
       "post": "Пост",
       "question": "Вопрос",
