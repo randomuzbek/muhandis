@@ -66,3 +66,20 @@ export async function notifyFollow(
     `${s.notifyFollow(name || s.someone)}\n${appLink(locale, `u/${followerUserId}`)}`,
   );
 }
+
+// Soru hedeflenen kullanıcıya bildirim (soran "belirli kişiye" sordu ya da admin yönlendirdi).
+export async function notifyQuestionTarget(
+  targetUserId: string,
+  postId: number,
+  title: string | null,
+) {
+  const to = await recipient(targetUserId);
+  if (!to) return;
+  const s = botStrings(to.languageCode);
+  const locale = pickLocale(to.languageCode);
+  const label = title ? `"${title}"` : s.postLabelFallback;
+  await notifyUser(
+    to.telegramId,
+    `${s.notifyQuestion(label)}\n${appLink(locale, `feed/${postId}`)}`,
+  );
+}

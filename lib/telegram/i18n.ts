@@ -28,6 +28,7 @@ interface BotStrings {
   openApp: string;
   notifyComment: (label: string) => string;
   notifyFollow: (name: string) => string;
+  notifyQuestion: (label: string) => string;
   postLabelFallback: string;
   someone: string;
   digest: (s: DigestStats) => string;
@@ -42,6 +43,7 @@ const STRINGS: Record<BotLocale, BotStrings> = {
     openApp: "🚀 Ilovani ochish",
     notifyComment: (label) => `💬 ${label} ostiga yangi izoh qoldirildi.`,
     notifyFollow: (name) => `👤 ${name} sizni kuzata boshladi.`,
+    notifyQuestion: (label) => `❓ Sizga savol yo'naltirildi: ${label}`,
     postLabelFallback: "postingiz",
     someone: "Kimdir",
     digest: (s) =>
@@ -59,6 +61,7 @@ const STRINGS: Record<BotLocale, BotStrings> = {
     openApp: "🚀 Open the app",
     notifyComment: (label) => `💬 New comment on ${label}.`,
     notifyFollow: (name) => `👤 ${name} started following you.`,
+    notifyQuestion: (label) => `❓ A question was directed to you: ${label}`,
     postLabelFallback: "your post",
     someone: "Someone",
     digest: (s) =>
@@ -76,6 +79,7 @@ const STRINGS: Record<BotLocale, BotStrings> = {
     openApp: "🚀 Открыть приложение",
     notifyComment: (label) => `💬 Новый комментарий к ${label}.`,
     notifyFollow: (name) => `👤 ${name} подписался на вас.`,
+    notifyQuestion: (label) => `❓ Вам направлен вопрос: ${label}`,
     postLabelFallback: "вашему посту",
     someone: "Кто-то",
     digest: (s) =>
@@ -93,6 +97,7 @@ const STRINGS: Record<BotLocale, BotStrings> = {
     openApp: "🚀 Uygulamayı aç",
     notifyComment: (label) => `💬 ${label} altına yeni yorum yapıldı.`,
     notifyFollow: (name) => `👤 ${name} seni takip etmeye başladı.`,
+    notifyQuestion: (label) => `❓ Sana bir soru yöneltildi: ${label}`,
     postLabelFallback: "gönderin",
     someone: "Biri",
     digest: (s) =>
