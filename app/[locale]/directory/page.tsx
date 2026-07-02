@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { searchProfiles, type DirectoryFilters } from "@/lib/queries/directory";
 import { getFieldCounts } from "@/lib/queries/stats";
 import { ENGINEERING_FIELDS, labelFor } from "@/lib/data/taxonomy";
+import { countryName } from "@/lib/data/places";
 import { DirectorySearch } from "@/components/directory/DirectorySearch";
 
 // İstatistik sayfasından gelen ?field=/?country= gibi paylaşılabilir derin
@@ -9,6 +11,40 @@ import { DirectorySearch } from "@/components/directory/DirectorySearch";
 function param(value: string | string[] | undefined): string | undefined {
   const v = Array.isArray(value) ? value[0] : value;
   return v && v.trim() ? v.trim() : undefined;
+}
+
+// Filtreli dizin linkleri paylaşılabilir olduğundan başlık/açıklama filtreyi
+// yansıtsın — alan/ülke seçiliyse önizleme kartı da o bağlamı gösterir.
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const sp = await searchParams;
+  const t = await getTranslations({ locale, namespace: "directory" });
+
+  const fieldSlug = param(sp.field);
+  const country = param(sp.country);
+  const field = fieldSlug
+    ? ENGINEERING_FIELDS.find((f) => f.slug === fieldSlug)
+    : undefined;
+  const context = [
+    field ? labelFor(field.labels, locale) : null,
+    countryName(country, locale) || null,
+  ].filter(Boolean);
+
+  const base = t("title");
+  const title = context.length ? `${context.join(" · ")} — ${base}` : base;
+
+  return {
+    title,
+    description: title,
+    openGraph: { title, description: title, url: `/${locale}/directory` },
+    twitter: { card: "summary_large_image", title, description: title },
+  };
 }
 
 export default async function DirectoryPage({

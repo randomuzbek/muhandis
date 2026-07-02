@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Providers } from "@/components/providers/Providers";
 import { Header } from "@/components/layout/Header";
@@ -20,11 +20,48 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Muhandis — O'zbek muhandislari hamjamiyati",
-  description:
-    "Dunyo bo'ylab o'qiyotgan va ishlayotgan o'zbek muhandislarini birlashtiruvchi tarmoq.",
-};
+// Paylaşılan linkler (profil/spotlight/dizin/davet) Telegram & sosyal medyada
+// zengin önizleme kartı olarak görünsün diye sayfa başına metadata + OG.
+// metadataBase olmadan OG görsel URL'leri göreli kalır ve crawler'lar çözemez.
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [app, home] = await Promise.all([
+    getTranslations({ locale, namespace: "app" }),
+    getTranslations({ locale, namespace: "home" }),
+  ]);
+  const name = app("name");
+  const tagline = home("tagline");
+  const description = home("description");
+
+  return {
+    metadataBase: new URL(APP_URL),
+    title: {
+      default: `${name} — ${tagline}`,
+      template: `%s · ${name}`,
+    },
+    description,
+    applicationName: name,
+    openGraph: {
+      type: "website",
+      siteName: name,
+      title: `${name} — ${tagline}`,
+      description,
+      url: `/${locale}`,
+      locale,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name} — ${tagline}`,
+      description,
+    },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
