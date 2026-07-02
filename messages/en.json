@@ -6,7 +6,7 @@
     "home": "Home",
     "directory": "Directory",
     "stats": "Stats",
-    "feed": "Feed",
+    "feed": "Topics",
     "profile": "Profile",
     "editProfile": "Edit profile",
     "signIn": "Sign in",
@@ -42,6 +42,22 @@
     "byField": "By field",
     "byCountry": "By country",
     "empty": "No data yet",
+    "roles": {
+      "title": "Roles",
+      "assign": "Assign role",
+      "remove": "Remove",
+      "pickUser": "User",
+      "pickRole": "Role",
+      "pickTopic": "Topic (maintainer only)",
+      "current": "Current roles",
+      "empty": "No roles assigned yet"
+    },
+    "route": {
+      "title": "Route a question",
+      "pickQuestion": "Question",
+      "pickPerson": "Person",
+      "route": "Route"
+    },
     "kpi": {
       "users": "Users",
       "profiles": "Profiles",
@@ -188,13 +204,20 @@
     }
   },
   "feed": {
-    "title": "Feed",
+    "title": "Topics",
     "newPost": "New post",
+    "searchPlaceholder": "Search questions and posts",
     "empty": "No posts yet.",
     "allTopics": "All",
     "topic": "Topic",
     "noTopic": "No topic",
     "typeLabel": "Type",
+    "audience": {
+      "label": "Audience",
+      "public": "Everyone",
+      "direct": "A specific person",
+      "pickPerson": "Pick a person"
+    },
     "type": {
       "post": "Post",
       "question": "Question",

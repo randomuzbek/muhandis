@@ -3,11 +3,14 @@
 import { z } from "zod";
 import { eq, and, count, gte } from "drizzle-orm";
 import { db } from "@/db";
-import { posts, comments, reactions, topics } from "@/db/schema";
+import { posts, comments, reactions, topics, questionTargets } from "@/db/schema";
 import { requireUserId } from "@/lib/auth/session";
-import { isAdmin } from "@/lib/auth/isAdmin";
+import { can } from "@/lib/auth/roles";
 import { RATE_LIMITS, windowStart, exceeds } from "@/lib/auth/rateLimit";
-import { notifyComment } from "@/lib/telegram/notifications";
+import {
+  notifyComment,
+  notifyQuestionTarget,
+} from "@/lib/telegram/notifications";
 import { POST_TYPES } from "@/lib/data/posts";
 
 const createSchema = z.object({
@@ -15,6 +18,7 @@ const createSchema = z.object({
   title: z.string().trim().max(160).optional().or(z.literal("")),
   body: z.string().trim().min(1, "EMPTY").max(8000),
   topicSlug: z.string().trim().optional().or(z.literal("")),
+  targetUserId: z.string().trim().optional().or(z.literal("")),
 });
 
 export type CreatePostInput = z.input<typeof createSchema>;
@@ -70,6 +74,19 @@ export async function createPost(
       topicId,
     })
     .returning({ id: posts.id });
+
+  // "Belirli kişiye" sorulan soru: hedef satırı + bildirim (kendine hariç).
+  if (
+    data.type === "question" &&
+    data.targetUserId &&
+    data.targetUserId !== userId
+  ) {
+    await db
+      .insert(questionTargets)
+      .values({ postId: created.id, userId: data.targetUserId, source: "asker" })
+      .onConflictDoNothing();
+    void notifyQuestionTarget(data.targetUserId, created.id, data.title || null);
+  }
 
   return { ok: true, id: created.id };
 }
@@ -130,11 +147,15 @@ export async function deletePost(
 
   const post = await db.query.posts.findFirst({
     where: eq(posts.id, postId),
-    columns: { id: true, authorId: true },
+    columns: { id: true, authorId: true, topicId: true },
   });
   if (!post) return { ok: false, error: "NOT_FOUND" };
 
-  if (post.authorId !== userId && !(await isAdmin(userId))) {
+  // Yazar her zaman; aksi halde içerik-moderasyon yetkisi (admin/moderatör/konu maintainer'ı).
+  if (
+    post.authorId !== userId &&
+    !(await can(userId, "content.moderate", { topicId: post.topicId }))
+  ) {
     return { ok: false, error: "FORBIDDEN" };
   }
 
@@ -234,12 +255,22 @@ export async function deleteComment(
 
   const comment = await db.query.comments.findFirst({
     where: eq(comments.id, commentId),
-    columns: { id: true, authorId: true },
+    columns: { id: true, authorId: true, postId: true },
   });
   if (!comment) return { ok: false, error: "NOT_FOUND" };
 
-  if (comment.authorId !== userId && !(await isAdmin(userId))) {
-    return { ok: false, error: "FORBIDDEN" };
+  if (comment.authorId !== userId) {
+    const parent = await db.query.posts.findFirst({
+      where: eq(posts.id, comment.postId),
+      columns: { topicId: true },
+    });
+    if (
+      !(await can(userId, "content.moderate", {
+        topicId: parent?.topicId ?? null,
+      }))
+    ) {
+      return { ok: false, error: "FORBIDDEN" };
+    }
   }
 
   await db.delete(comments).where(eq(comments.id, commentId));

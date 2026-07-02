@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { getPost } from "@/lib/queries/feed";
 import { getSessionUser } from "@/lib/auth/session";
-import { isAdmin } from "@/lib/auth/isAdmin";
+import { can } from "@/lib/auth/roles";
 import { LikeButton } from "@/components/feed/LikeButton";
 import { CommentForm } from "@/components/feed/CommentForm";
 import { CommentItem } from "@/components/feed/CommentItem";
@@ -36,7 +36,11 @@ export default async function PostPage({
   const t = await getTranslations("feed");
   const user = await getSessionUser();
   const me = user?.id;
-  const admin = await isAdmin(me);
+  // Sil butonu görünürlüğü sunucu yetkisiyle eş: env-admin + rol-bazlı
+  // moderatör (Hakam) + konu maintainer'ı (bu konu kapsamında).
+  const canModerate = await can(me, "content.moderate", {
+    topicId: post.topicId,
+  });
 
   const topicLabel = post.topicSlug
     ? labelFor(
@@ -79,7 +83,7 @@ export default async function PostPage({
           <PostActions
             postId={post.id}
             isOwner={post.authorId === me}
-            isAdmin={admin}
+            canModerate={canModerate}
             canReport={!!me && post.authorId !== me}
           />
         </div>
@@ -117,7 +121,7 @@ export default async function PostPage({
                   comment={c}
                   locale={locale}
                   isOwner={c.authorId === me}
-                  isAdmin={admin}
+                  canModerate={canModerate}
                   canReport={!!me && c.authorId !== me}
                 />
               </li>

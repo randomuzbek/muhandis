@@ -1,5 +1,5 @@
 import "server-only";
-import { and, eq, desc, sql, count } from "drizzle-orm";
+import { and, eq, desc, sql, count, ilike, or } from "drizzle-orm";
 import { db } from "@/db";
 import {
   posts,
@@ -14,6 +14,8 @@ import type { PostType } from "@/lib/data/posts";
 export interface FeedFilters {
   topicSlug?: string;
   type?: PostType;
+  /** Serbest metin — başlık/gövdede aranır (ilike). */
+  q?: string;
 }
 
 export interface FeedItem {
@@ -40,6 +42,14 @@ export async function listPosts(
   const conditions = [];
   if (filters.type) conditions.push(eq(posts.type, filters.type));
   if (filters.topicSlug) conditions.push(eq(topics.slug, filters.topicSlug));
+  const q = filters.q?.trim();
+  if (q) {
+    // Postgres ilike özel karakterlerini (% _) kaçırıp literal ara.
+    const term = `%${q.replace(/[%_\\]/g, (c) => `\\${c}`)}%`;
+    conditions.push(
+      or(ilike(posts.title, term), ilike(posts.body, term)),
+    );
+  }
 
   const rows = await db
     .select({
@@ -88,6 +98,7 @@ export async function getPost(id: number) {
       body: posts.body,
       createdAt: posts.createdAt,
       topicSlug: topics.slug,
+      topicId: posts.topicId,
       authorId: posts.authorId,
       authorName,
       authorImage,

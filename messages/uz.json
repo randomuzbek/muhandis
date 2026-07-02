@@ -6,7 +6,7 @@
     "home": "Bosh sahifa",
     "directory": "Katalog",
     "stats": "Statistika",
-    "feed": "Lenta",
+    "feed": "Mavzular",
     "profile": "Profil",
     "editProfile": "Profilni tahrirlash",
     "signIn": "Kirish",
@@ -42,6 +42,22 @@
     "byField": "Soha bo'yicha",
     "byCountry": "Davlat bo'yicha",
     "empty": "Hozircha ma'lumot yo'q",
+    "roles": {
+      "title": "Rollar",
+      "assign": "Rol berish",
+      "remove": "Olib tashlash",
+      "pickUser": "Foydalanuvchi",
+      "pickRole": "Rol",
+      "pickTopic": "Mavzu (faqat mas'ul uchun)",
+      "current": "Joriy rollar",
+      "empty": "Hali rol berilmagan"
+    },
+    "route": {
+      "title": "Savolni yo'naltirish",
+      "pickQuestion": "Savol",
+      "pickPerson": "Kishi",
+      "route": "Yo'naltirish"
+    },
     "kpi": {
       "users": "Foydalanuvchilar",
       "profiles": "Profillar",
@@ -188,13 +204,20 @@
     }
   },
   "feed": {
-    "title": "Lenta",
+    "title": "Mavzular",
     "newPost": "Yangi post",
+    "searchPlaceholder": "Savol yoki postlardan qidirish",
     "empty": "Hali postlar yo'q.",
     "allTopics": "Barchasi",
     "topic": "Mavzu",
     "noTopic": "Mavzusiz",
     "typeLabel": "Turi",
+    "audience": {
+      "label": "Kimga",
+      "public": "Hammaga ochiq",
+      "direct": "Muayyan shaxsga",
+      "pickPerson": "Kishini tanlang"
+    },
     "type": {
       "post": "Post",
       "question": "Savol",

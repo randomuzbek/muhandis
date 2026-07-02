@@ -14,13 +14,13 @@ export function CommentItem({
   comment,
   locale,
   isOwner,
-  isAdmin,
+  canModerate,
   canReport,
 }: {
   comment: PostComment;
   locale: string;
   isOwner: boolean;
-  isAdmin: boolean;
+  canModerate: boolean;
   canReport: boolean;
 }) {
   const t = useTranslations("actions");
@@ -49,7 +49,7 @@ export function CommentItem({
 
   const items: MenuItem[] = [];
   if (isOwner) items.push({ label: t("edit"), onClick: () => setEditing(true) });
-  if (isOwner || isAdmin) {
+  if (isOwner || canModerate) {
     items.push({ label: t("delete"), danger: true, onClick: onDelete });
   }
   if (canReport) {

@@ -6,7 +6,7 @@
     "home": "Главная",
     "directory": "Каталог",
     "stats": "Статистика",
-    "feed": "Лента",
+    "feed": "Темы",
     "profile": "Профиль",
     "editProfile": "Редактировать профиль",
     "signIn": "Войти",
@@ -42,6 +42,22 @@
     "byField": "По направлениям",
     "byCountry": "По странам",
     "empty": "Пока нет данных",
+    "roles": {
+      "title": "Роли",
+      "assign": "Назначить роль",
+      "remove": "Удалить",
+      "pickUser": "Пользователь",
+      "pickRole": "Роль",
+      "pickTopic": "Тема (только для куратора)",
+      "current": "Текущие роли",
+      "empty": "Роли ещё не назначены"
+    },
+    "route": {
+      "title": "Направить вопрос",
+      "pickQuestion": "Вопрос",
+      "pickPerson": "Человек",
+      "route": "Направить"
+    },
     "kpi": {
       "users": "Пользователи",
       "profiles": "Профили",
@@ -188,13 +204,20 @@
     }
   },
   "feed": {
-    "title": "Лента",
+    "title": "Темы",
     "newPost": "Новый пост",
+    "searchPlaceholder": "Поиск по вопросам и постам",
     "empty": "Пока нет постов.",
     "allTopics": "Все",
     "topic": "Тема",
     "noTopic": "Без темы",
     "typeLabel": "Тип",
+    "audience": {
+      "label": "Кому",
+      "public": "Всем",
+      "direct": "Конкретному человеку",
+      "pickPerson": "Выберите человека"
+    },
     "type": {
       "post": "Пост",
       "question": "Вопрос",

@@ -11,12 +11,12 @@ import { ReportModal } from "./ReportModal";
 export function PostActions({
   postId,
   isOwner,
-  isAdmin,
+  canModerate,
   canReport,
 }: {
   postId: number;
   isOwner: boolean;
-  isAdmin: boolean;
+  canModerate: boolean;
   canReport: boolean;
 }) {
   const t = useTranslations("actions");
@@ -39,7 +39,7 @@ export function PostActions({
       onClick: () => router.push(`/feed/${postId}/edit`),
     });
   }
-  if (isOwner || isAdmin) {
+  if (isOwner || canModerate) {
     items.push({ label: t("delete"), danger: true, onClick: onDelete });
   }
   if (canReport) {

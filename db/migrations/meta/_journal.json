@@ -50,6 +50,20 @@
       "when": 1781349341579,
       "tag": "0006_past_morg",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1782731402835,
+      "tag": "0007_new_taskmaster",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1782734778376,
+      "tag": "0008_uneven_crystal",
+      "breakpoints": true
     }
   ]
 }
