@@ -6,7 +6,7 @@
     "home": "Bosh sahifa",
     "directory": "Katalog",
     "stats": "Statistika",
-    "feed": "Lenta",
+    "feed": "Mavzular",
     "profile": "Profil",
     "editProfile": "Profilni tahrirlash",
     "signIn": "Kirish",
@@ -204,7 +204,7 @@
     }
   },
   "feed": {
-    "title": "Lenta",
+    "title": "Mavzular",
     "newPost": "Yangi post",
     "searchPlaceholder": "Savol yoki postlardan qidirish",
     "empty": "Hali postlar yo'q.",

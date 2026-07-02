@@ -98,6 +98,7 @@ export async function getPost(id: number) {
       body: posts.body,
       createdAt: posts.createdAt,
       topicSlug: topics.slug,
+      topicId: posts.topicId,
       authorId: posts.authorId,
       authorName,
       authorImage,

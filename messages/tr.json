@@ -6,7 +6,7 @@
     "home": "Ana sayfa",
     "directory": "Dizin",
     "stats": "İstatistik",
-    "feed": "Akış",
+    "feed": "Konular",
     "profile": "Profil",
     "editProfile": "Profili düzenle",
     "signIn": "Giriş yap",
@@ -204,7 +204,7 @@
     }
   },
   "feed": {
-    "title": "Akış",
+    "title": "Konular",
     "newPost": "Yeni gönderi",
     "searchPlaceholder": "Soru ve gönderilerde ara",
     "empty": "Henüz gönderi yok.",

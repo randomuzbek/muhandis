@@ -6,7 +6,7 @@
     "home": "Home",
     "directory": "Directory",
     "stats": "Stats",
-    "feed": "Feed",
+    "feed": "Topics",
     "profile": "Profile",
     "editProfile": "Edit profile",
     "signIn": "Sign in",
@@ -204,7 +204,7 @@
     }
   },
   "feed": {
-    "title": "Feed",
+    "title": "Topics",
     "newPost": "New post",
     "searchPlaceholder": "Search questions and posts",
     "empty": "No posts yet.",
