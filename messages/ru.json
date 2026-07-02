@@ -206,6 +206,7 @@
   "feed": {
     "title": "Лента",
     "newPost": "Новый пост",
+    "searchPlaceholder": "Поиск по вопросам и постам",
     "empty": "Пока нет постов.",
     "allTopics": "Все",
     "topic": "Тема",

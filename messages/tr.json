@@ -206,6 +206,7 @@
   "feed": {
     "title": "Akış",
     "newPost": "Yeni gönderi",
+    "searchPlaceholder": "Soru ve gönderilerde ara",
     "empty": "Henüz gönderi yok.",
     "allTopics": "Tümü",
     "topic": "Konu",

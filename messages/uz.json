@@ -206,6 +206,7 @@
   "feed": {
     "title": "Lenta",
     "newPost": "Yangi post",
+    "searchPlaceholder": "Savol yoki postlardan qidirish",
     "empty": "Hali postlar yo'q.",
     "allTopics": "Barchasi",
     "topic": "Mavzu",

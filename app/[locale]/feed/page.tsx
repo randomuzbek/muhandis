@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { listPosts, type FeedItem } from "@/lib/queries/feed";
 import { TOPICS, labelFor } from "@/lib/data/taxonomy";
 import { formatRelative } from "@/lib/format/time";
+import { FeedSearch } from "@/components/feed/FeedSearch";
 import {
   Avatar,
   Badge,
@@ -37,8 +38,9 @@ export default async function FeedPage({
   setRequestLocale(locale);
   const sp = await searchParams;
   const topic = str(sp.topic);
+  const q = str(sp.q);
 
-  const items = await listPosts({ topicSlug: topic });
+  const items = await listPosts({ topicSlug: topic, q });
   const t = await getTranslations("feed");
 
   return (
@@ -49,6 +51,10 @@ export default async function FeedPage({
           <PlusIcon />
           {t("newPost")}
         </Link>
+      </div>
+
+      <div className="mb-4">
+        <FeedSearch initialQ={q ?? ""} topic={topic} />
       </div>
 
       <div className="-mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:-mx-6 sm:px-6 [&::-webkit-scrollbar]:hidden">
