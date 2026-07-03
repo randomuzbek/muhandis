@@ -5,6 +5,7 @@ import {
   posts,
   comments,
   reactions,
+  commentReactions,
   topics,
   profiles,
   users,
@@ -87,6 +88,8 @@ export interface PostComment {
   authorId: string;
   authorName: string;
   authorImage: string | null;
+  reactionCount: number;
+  viewerReacted: boolean;
 }
 
 export async function getPost(id: number, viewerId?: string) {
@@ -120,6 +123,10 @@ export async function getPost(id: number, viewerId?: string) {
       authorId: comments.authorId,
       authorName,
       authorImage,
+      reactionCount: sql<number>`(select count(*) from ${commentReactions} where ${commentReactions.commentId} = ${comments.id})`,
+      viewerReacted: viewerId
+        ? sql<boolean>`exists(select 1 from ${commentReactions} where ${commentReactions.commentId} = ${comments.id} and ${commentReactions.userId} = ${viewerId})`
+        : sql<boolean>`false`,
     })
     .from(comments)
     .leftJoin(users, eq(comments.authorId, users.id))
@@ -143,7 +150,11 @@ export async function getPost(id: number, viewerId?: string) {
 
   return {
     post,
-    comments: commentRows as PostComment[],
+    comments: commentRows.map((r) => ({
+      ...r,
+      reactionCount: Number(r.reactionCount),
+      viewerReacted: Boolean(r.viewerReacted),
+    })) as PostComment[],
     reactionCount: Number(reactionCount),
     viewerReacted,
   };

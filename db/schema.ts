@@ -259,6 +259,25 @@ export const reactions = pgTable(
   ],
 );
 
+// Yorum (cevap) reaksiyonu = "Rahmat". Gönderi reaksiyonlarıyla aynı şekil,
+// ayrı tablo (mevcut reactions tablosuna dokunulmaz). Q&A'da en değerli Rahmat
+// faydalı bir cevaba verilir.
+export const commentReactions = pgTable(
+  "comment_reactions",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    commentId: integer("comment_id")
+      .notNull()
+      .references(() => comments.id, { onDelete: "cascade" }),
+  },
+  (t) => [
+    primaryKey({ columns: [t.userId, t.commentId] }),
+    index("comment_reactions_comment_idx").on(t.commentId),
+  ],
+);
+
 // Şikayet / raporlama: bir kullanıcı bir gönderi ya da yorumu bildirir.
 // Adminler bot DM ile haberdar edilir; içeriği gönderi sayfasından silebilir.
 export const reports = pgTable(

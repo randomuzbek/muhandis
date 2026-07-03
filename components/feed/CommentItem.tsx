@@ -3,10 +3,15 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/navigation";
-import { updateComment, deleteComment } from "@/lib/actions/posts";
+import {
+  updateComment,
+  deleteComment,
+  toggleCommentReaction,
+} from "@/lib/actions/posts";
 import { formatRelative } from "@/lib/format/time";
 import { Avatar, Card, buttonClass, fieldClass, cn } from "@/components/ui/kit";
 import { ActionsMenu, type MenuItem } from "./ActionsMenu";
+import { ReactionButton } from "./ReactionButton";
 import { ReportModal } from "./ReportModal";
 import type { PostComment } from "@/lib/queries/feed";
 
@@ -109,9 +114,20 @@ export function CommentItem({
           </div>
         </div>
       ) : (
-        <p className="mt-2 whitespace-pre-wrap text-sm text-[var(--color-foreground)]/85">
-          {comment.body}
-        </p>
+        <>
+          <p className="mt-2 whitespace-pre-wrap text-sm text-[var(--color-foreground)]/85">
+            {comment.body}
+          </p>
+          <div className="mt-2.5">
+            <ReactionButton
+              targetId={comment.id}
+              initialCount={comment.reactionCount}
+              initiallyReacted={comment.viewerReacted}
+              action={toggleCommentReaction}
+              compact
+            />
+          </div>
+        </>
       )}
 
       {reporting && (

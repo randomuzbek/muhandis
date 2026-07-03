@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getPost } from "@/lib/queries/feed";
 import { getSessionUser } from "@/lib/auth/session";
 import { can } from "@/lib/auth/roles";
-import { LikeButton } from "@/components/feed/LikeButton";
+import { ReactionButton } from "@/components/feed/ReactionButton";
 import { CommentForm } from "@/components/feed/CommentForm";
 import { CommentItem } from "@/components/feed/CommentItem";
 import { PostActions } from "@/components/feed/PostActions";
@@ -97,10 +97,10 @@ export default async function PostPage({
         </p>
 
         <div className="mt-4 flex items-center gap-3">
-          <LikeButton
-            postId={post.id}
+          <ReactionButton
+            targetId={post.id}
             initialCount={reactionCount}
-            initiallyLiked={viewerReacted}
+            initiallyReacted={viewerReacted}
           />
           {topicLabel && (
             <Link

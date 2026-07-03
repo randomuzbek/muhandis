@@ -64,6 +64,13 @@
       "when": 1782734778376,
       "tag": "0008_uneven_crystal",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1783100082996,
+      "tag": "0009_talented_thunderball",
+      "breakpoints": true
     }
   ]
 }

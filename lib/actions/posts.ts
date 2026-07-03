@@ -3,7 +3,14 @@
 import { z } from "zod";
 import { eq, and, count, gte } from "drizzle-orm";
 import { db } from "@/db";
-import { posts, comments, reactions, topics, questionTargets } from "@/db/schema";
+import {
+  posts,
+  comments,
+  reactions,
+  commentReactions,
+  topics,
+  questionTargets,
+} from "@/db/schema";
 import { requireUserId } from "@/lib/auth/session";
 import { can } from "@/lib/auth/roles";
 import { RATE_LIMITS, windowStart, exceeds } from "@/lib/auth/rateLimit";
@@ -299,5 +306,42 @@ export async function toggleReaction(
   }
 
   await db.insert(reactions).values({ postId, userId }).onConflictDoNothing();
+  return { ok: true, liked: true };
+}
+
+// Yorum (cevap) reaksiyonu = "Rahmat". Gönderi toggle'ının aynısı, yorum tablosunda.
+export async function toggleCommentReaction(
+  commentId: number,
+): Promise<{ ok: true; liked: boolean } | { ok: false; error: string }> {
+  let userId: string;
+  try {
+    userId = await requireUserId();
+  } catch {
+    return { ok: false, error: "UNAUTHENTICATED" };
+  }
+
+  const existing = await db.query.commentReactions.findFirst({
+    where: and(
+      eq(commentReactions.commentId, commentId),
+      eq(commentReactions.userId, userId),
+    ),
+  });
+
+  if (existing) {
+    await db
+      .delete(commentReactions)
+      .where(
+        and(
+          eq(commentReactions.commentId, commentId),
+          eq(commentReactions.userId, userId),
+        ),
+      );
+    return { ok: true, liked: false };
+  }
+
+  await db
+    .insert(commentReactions)
+    .values({ commentId, userId })
+    .onConflictDoNothing();
   return { ok: true, liked: true };
 }

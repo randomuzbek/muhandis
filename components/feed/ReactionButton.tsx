@@ -5,35 +5,45 @@ import { useTranslations } from "next-intl";
 import { toggleReaction } from "@/lib/actions/posts";
 import { cn } from "@/components/ui/kit";
 
-export function LikeButton({
-  postId,
+type ToggleResult =
+  | { ok: true; liked: boolean }
+  | { ok: false; error: string };
+
+// Tek pozitif sinyal = "Rahmat". Hem gönderi (toggleReaction) hem yorum
+// (toggleCommentReaction) için aynı buton; action prop'u ile hedef belirlenir.
+export function ReactionButton({
+  targetId,
   initialCount,
-  initiallyLiked = false,
+  initiallyReacted = false,
+  action = toggleReaction,
+  compact = false,
 }: {
-  postId: number;
+  targetId: number;
   initialCount: number;
-  initiallyLiked?: boolean;
+  initiallyReacted?: boolean;
+  action?: (id: number) => Promise<ToggleResult>;
+  compact?: boolean;
 }) {
   const t = useTranslations("feed");
   const [count, setCount] = useState(initialCount);
-  const [liked, setLiked] = useState(initiallyLiked);
+  const [reacted, setReacted] = useState(initiallyReacted);
   const [pending, setPending] = useState(false);
 
   async function onClick() {
     if (pending) return;
     setPending(true);
-    // İyimser güncelleme
-    const optimistic = liked ? count - 1 : count + 1;
-    setLiked(!liked);
-    setCount(optimistic);
-    const res = await toggleReaction(postId);
+    // İyimser güncelleme; hata olursa önceki duruma dön.
+    const prevCount = count;
+    const prevReacted = reacted;
+    setReacted(!reacted);
+    setCount(reacted ? count - 1 : count + 1);
+    const res = await action(targetId);
     setPending(false);
     if (!res.ok) {
-      // geri al
-      setLiked(liked);
-      setCount(count);
+      setReacted(prevReacted);
+      setCount(prevCount);
     } else {
-      setLiked(res.liked);
+      setReacted(res.liked);
     }
   }
 
@@ -41,26 +51,27 @@ export function LikeButton({
     <button
       type="button"
       onClick={onClick}
-      aria-pressed={liked}
+      aria-pressed={reacted}
       className={cn(
-        "inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium ring-1 transition active:scale-[0.97]",
-        liked
+        "inline-flex items-center rounded-full font-medium ring-1 transition active:scale-[0.97]",
+        compact ? "h-8 gap-1 px-3 text-xs" : "h-9 gap-1.5 px-3.5 text-sm",
+        reacted
           ? "bg-[var(--color-secondary)] text-[var(--color-accent)] ring-transparent"
           : "text-[var(--color-foreground)] ring-[var(--color-separator)] hover:bg-[var(--color-secondary)]",
       )}
     >
-      <ThanksIcon filled={liked} />
-      <span>{count}</span>
+      <ThanksIcon filled={reacted} size={compact ? 14 : 16} />
+      {count > 0 && <span>{count}</span>}
       <span className="text-[var(--color-hint)]">{t("thank")}</span>
     </button>
   );
 }
 
-function ThanksIcon({ filled }: { filled: boolean }) {
+function ThanksIcon({ filled, size }: { filled: boolean; size: number }) {
   return (
     <svg
-      width="16"
-      height="16"
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill={filled ? "currentColor" : "none"}
       stroke="currentColor"
