@@ -45,18 +45,18 @@ export function LikeButton({
       className={cn(
         "inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium ring-1 transition active:scale-[0.97]",
         liked
-          ? "bg-red-500/15 text-red-600 ring-transparent dark:text-red-400"
+          ? "bg-[var(--color-secondary)] text-[var(--color-accent)] ring-transparent"
           : "text-[var(--color-foreground)] ring-[var(--color-separator)] hover:bg-[var(--color-secondary)]",
       )}
     >
-      <HeartIcon filled={liked} />
+      <ThanksIcon filled={liked} />
       <span>{count}</span>
-      <span className="text-[var(--color-hint)]">{t("like")}</span>
+      <span className="text-[var(--color-hint)]">{t("thank")}</span>
     </button>
   );
 }
 
-function HeartIcon({ filled }: { filled: boolean }) {
+function ThanksIcon({ filled }: { filled: boolean }) {
   return (
     <svg
       width="16"
@@ -69,7 +69,9 @@ function HeartIcon({ filled }: { filled: boolean }) {
       strokeLinejoin="round"
       aria-hidden
     >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z" />
+      <path d="M7 10v11" />
+      <path d="M4 21h3V10H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z" />
+      <path d="M7 10l4-7a2 2 0 0 1 3 1.7V9h4.5a2 2 0 0 1 2 2.3l-1.3 7A2 2 0 0 1 19.2 20H7" />
     </svg>
   );
 }
