@@ -29,13 +29,14 @@ export default async function PostPage({
   const numericId = Number(id);
   if (!Number.isInteger(numericId)) notFound();
 
-  const data = await getPost(numericId);
-  if (!data) notFound();
-
-  const { post, comments, reactionCount } = data;
-  const t = await getTranslations("feed");
   const user = await getSessionUser();
   const me = user?.id;
+
+  const data = await getPost(numericId, me);
+  if (!data) notFound();
+
+  const { post, comments, reactionCount, viewerReacted } = data;
+  const t = await getTranslations("feed");
   // Sil butonu görünürlüğü sunucu yetkisiyle eş: env-admin + rol-bazlı
   // moderatör (Hakam) + konu maintainer'ı (bu konu kapsamında).
   const canModerate = await can(me, "content.moderate", {
@@ -96,7 +97,11 @@ export default async function PostPage({
         </p>
 
         <div className="mt-4 flex items-center gap-3">
-          <LikeButton postId={post.id} initialCount={reactionCount} />
+          <LikeButton
+            postId={post.id}
+            initialCount={reactionCount}
+            initiallyLiked={viewerReacted}
+          />
           {topicLabel && (
             <Link
               href={`/feed?topic=${post.topicSlug}`}

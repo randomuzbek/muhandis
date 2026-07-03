@@ -8,13 +8,15 @@ import { cn } from "@/components/ui/kit";
 export function LikeButton({
   postId,
   initialCount,
+  initiallyLiked = false,
 }: {
   postId: number;
   initialCount: number;
+  initiallyLiked?: boolean;
 }) {
   const t = useTranslations("feed");
   const [count, setCount] = useState(initialCount);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(initiallyLiked);
   const [pending, setPending] = useState(false);
 
   async function onClick() {

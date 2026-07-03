@@ -89,7 +89,7 @@ export interface PostComment {
   authorImage: string | null;
 }
 
-export async function getPost(id: number) {
+export async function getPost(id: number, viewerId?: string) {
   const [post] = await db
     .select({
       id: posts.id,
@@ -132,9 +132,19 @@ export async function getPost(id: number) {
     .from(reactions)
     .where(eq(reactions.postId, id));
 
+  // Görüntüleyen bu gönderiye daha önce reaksiyon verdi mi? (buton başlangıç durumu)
+  let viewerReacted = false;
+  if (viewerId) {
+    const existing = await db.query.reactions.findFirst({
+      where: and(eq(reactions.postId, id), eq(reactions.userId, viewerId)),
+    });
+    viewerReacted = !!existing;
+  }
+
   return {
     post,
     comments: commentRows as PostComment[],
     reactionCount: Number(reactionCount),
+    viewerReacted,
   };
 }
